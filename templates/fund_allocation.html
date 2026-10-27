@@ -1,0 +1,373 @@
+
+{% extends "base.html" %}
+
+{% block title %}Fund Allocation{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-4 px-3 px-lg-4"
+     style="max-width: 1600px; margin: auto;">
+
+    <!-- Page Header -->
+    <div class="p-4 p-md-5 mb-4 rounded-4 text-white"
+         style="background: linear-gradient(120deg, #0250c5 0%, #5145b5 55%, #d43f8d 100%);
+                box-shadow: 0 10px 30px rgba(37, 80, 180, 0.15);">
+
+        <div class="d-flex justify-content-between align-items-center gap-3">
+
+            <div>
+                <span class="badge rounded-pill px-3 py-2 mb-3"
+                      style="background: rgba(255,255,255,0.18); color: white;">
+                    <i class="bi bi-wallet2 me-1"></i>
+                    SCHOLARSHIP MANAGEMENT
+                </span>
+
+                <h2 class="fw-bold mb-2 text-white">
+                    <i class="bi bi-cash-stack me-2"></i>
+                    Scholarship Fund Allocation
+                </h2>
+
+                <p class="mb-0" style="color: #f0efff;">
+                    Allocate scholarship funds to approved student applications.
+                </p>
+            </div>
+
+            <div class="d-none d-md-flex align-items-center justify-content-center rounded-circle"
+                 style="width: 90px; height: 90px;
+                        background: rgba(255,255,255,0.16);">
+                <i class="bi bi-piggy-bank" style="font-size: 3rem;"></i>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Allocation Information -->
+    <div class="card border-0 rounded-4 mb-4"
+         style="box-shadow: 0 6px 24px rgba(36,50,74,0.07);">
+
+        <div class="card-body p-4">
+
+            <div class="d-flex align-items-start gap-3">
+
+                <div class="d-flex align-items-center justify-content-center rounded-3 flex-shrink-0"
+                     style="width: 52px; height: 52px;
+                            background: linear-gradient(135deg, #0250c5, #d43f8d);
+                            color: white;">
+                    <i class="bi bi-info-circle fs-4"></i>
+                </div>
+
+                <div>
+                    <h5 class="fw-bold mb-2" style="color: #24324a;">
+                        Fund Allocation Details
+                    </h5>
+
+                    <p class="text-secondary mb-0">
+                        Enter an allocation amount within the available scholarship
+                        balance and maximum per-student limit. Verify the amount
+                        before submitting.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Applications Table -->
+    {% if applications %}
+
+    <div class="card border-0 rounded-4 overflow-hidden"
+         style="box-shadow: 0 8px 28px rgba(36,50,74,0.08);">
+
+        <!-- Table Header -->
+        <div class="card-header bg-white border-0 p-4">
+
+            <div class="d-flex flex-column flex-md-row
+                        justify-content-between align-items-md-center gap-2">
+
+                <div>
+                    <h5 class="fw-bold mb-1" style="color: #24324a;">
+                        <i class="bi bi-file-earmark-check me-2"
+                           style="color: #0250c5;"></i>
+                        Approved Applications
+                    </h5>
+
+                    <p class="text-secondary mb-0 small">
+                        Review available funds and allocate scholarship amounts.
+                    </p>
+                </div>
+
+                <span class="badge rounded-pill px-3 py-2"
+                      style="background-color: #eaf0ff; color: #0250c5;">
+                    <i class="bi bi-list-check me-1"></i>
+                    {{ applications|length }} Applications
+                </span>
+
+            </div>
+        </div>
+
+
+        <!-- Responsive Table -->
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0">
+
+                <thead>
+                    <tr style="background-color: #f3f5fb;">
+
+                        <th class="px-3 py-3 text-nowrap"
+                            style="color: #344054; font-size: 12px;">
+                            APPLICATION ID
+                        </th>
+
+                        <th class="px-3 py-3 text-nowrap"
+                            style="color: #344054; font-size: 12px;">
+                            STUDENT NAME
+                        </th>
+
+                        <th class="px-3 py-3 text-nowrap"
+                            style="color: #344054; font-size: 12px;">
+                            SCHOLARSHIP NAME
+                        </th>
+
+                        <th class="px-3 py-3 text-nowrap"
+                            style="color: #344054; font-size: 12px;">
+                            AVAILABLE FUNDS
+                        </th>
+
+                        <th class="px-3 py-3 text-nowrap"
+                            style="color: #344054; font-size: 12px;">
+                            MAXIMUM PER STUDENT
+                        </th>
+
+                        <th class="px-3 py-3 text-nowrap"
+                            style="color: #344054; font-size: 12px;">
+                            ALLOCATION AMOUNT (₹)
+                        </th>
+
+                        <th class="px-3 py-3 text-center text-nowrap"
+                            style="color: #344054; font-size: 12px;">
+                            ACTION
+                        </th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for application in applications %}
+
+                    <tr>
+
+                        <!-- Application ID -->
+                        <td class="px-3 py-4">
+
+                            <span class="badge rounded-pill px-3 py-2"
+                                  style="background-color: #eaf0ff;
+                                         color: #0250c5; font-weight: 700;">
+                                #{{ application.application_id }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- Student Name -->
+                        <td class="px-3 py-4">
+
+                            <div class="d-flex align-items-center gap-2">
+
+                                <div class="d-flex align-items-center justify-content-center
+                                            rounded-circle text-white flex-shrink-0"
+                                     style="width: 40px; height: 40px;
+                                            background: linear-gradient(135deg, #0250c5, #d43f8d);">
+
+                                    <i class="bi bi-person-fill"></i>
+
+                                </div>
+
+                                <span class="fw-semibold text-nowrap"
+                                      style="color: #263247;">
+                                    {{ application.student_name }}
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- Scholarship Name -->
+                        <td class="px-3 py-4">
+
+                            <span class="fw-semibold"
+                                  style="color: #344054; min-width: 150px; display: inline-block;">
+                                {{ application.scholarship_name }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- Available Funds -->
+                        <td class="px-3 py-4 text-nowrap">
+
+                            <span class="fw-bold"
+                                  style="color: #14804a;">
+                                ₹{{ "{:,.2f}".format(application.available_amount) }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- Maximum Per Student -->
+                        <td class="px-3 py-4 text-nowrap">
+
+                            {% if application.max_amount_per_student is not none %}
+
+                                <span class="fw-semibold"
+                                      style="color: #5145b5;">
+                                    ₹{{ "{:,.2f}".format(application.max_amount_per_student) }}
+                                </span>
+
+                            {% else %}
+
+                                <span class="text-secondary small">
+                                    No limit set
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- Allocation Form -->
+                        <td class="px-3 py-4">
+
+                            <form method="POST"
+                                  action="{{ url_for('fund_allocation') }}"
+                                  id="allocation-{{ application.application_id }}">
+
+                                <input type="hidden"
+                                       name="application_id"
+                                       value="{{ application.application_id }}">
+
+                                <div class="input-group"
+                                     style="min-width: 170px;">
+
+                                    <span class="input-group-text fw-semibold"
+                                          style="background-color: #f3f5fb;
+                                                 border-color: #d9e0ec;
+                                                 color: #5145b5;">
+                                        ₹
+                                    </span>
+
+                                    <input type="number"
+                                           class="form-control"
+                                           name="allocated_amount"
+                                           min="0.01"
+                                           max="{{ [application.available_amount, application.max_amount_per_student if application.max_amount_per_student is not none else application.available_amount]|min }}"
+                                           step="0.01"
+                                           placeholder="Enter amount"
+                                           aria-label="Allocated amount"
+                                           style="min-width: 115px;
+                                                  border-color: #d9e0ec;"
+                                           required>
+
+                                </div>
+
+                                <small class="text-secondary d-block mt-2">
+                                    Enter amount in rupees
+                                </small>
+
+                            </form>
+
+                        </td>
+
+
+                        <!-- Allocate Button -->
+                        <td class="px-3 py-4 text-center">
+
+                            <button type="submit"
+                                    form="allocation-{{ application.application_id }}"
+                                    class="btn text-white rounded-3 fw-semibold text-nowrap px-3 py-2"
+                                    style="background: linear-gradient(110deg, #0250c5, #5145b5, #d43f8d);
+                                           border: none; font-size: 13px;">
+
+                                <i class="bi bi-check-circle me-1"></i>
+                                Allocate Funds
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+
+    <!-- Important Note -->
+    <div class="alert border-0 rounded-3 mt-4 mb-0"
+         style="background-color: #edf5ff;
+                color: #345477;
+                border-left: 4px solid #0250c5 !important;">
+
+        <i class="bi bi-lightbulb-fill me-2"
+           style="color: #0250c5;"></i>
+
+        <strong>Important:</strong>
+        The allocation amount must not exceed the available scholarship funds
+        or the maximum amount allowed per student.
+
+    </div>
+
+
+    {% else %}
+
+    <!-- Empty State -->
+    <div class="card border-0 rounded-4 text-center py-5 px-3"
+         style="box-shadow: 0 8px 28px rgba(36,50,74,0.07);">
+
+        <div class="d-flex align-items-center justify-content-center
+                    rounded-circle mx-auto mb-4"
+             style="width: 90px; height: 90px;
+                    background: linear-gradient(135deg, #eaf0ff, #fce8f2);
+                    color: #5145b5;">
+
+            <i class="bi bi-wallet2" style="font-size: 2.8rem;"></i>
+
+        </div>
+
+        <h4 class="fw-bold mb-2" style="color: #24324a;">
+            No Applications Available
+        </h4>
+
+        <p class="text-secondary mb-0">
+            No approved applications are awaiting fund allocation.
+        </p>
+
+        <div class="mt-4">
+            <a href="{{ url_for('admin_dashboard') }}"
+               class="btn text-white rounded-3 px-4 py-2 fw-semibold"
+               style="background: linear-gradient(110deg, #0250c5, #d43f8d);
+                      border: none;">
+
+                <i class="bi bi-speedometer2 me-2"></i>
+                Back to Dashboard
+
+            </a>
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

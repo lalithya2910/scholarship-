@@ -1,0 +1,452 @@
+
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-4 px-3 px-lg-4">
+
+    <!-- Dashboard Heading -->
+    <div class="p-4 p-md-5 mb-4 rounded-4 shadow-sm text-white"
+         style="background: linear-gradient(135deg, #0250c5 0%, #8e44ad 55%, #d43f8d 100%);">
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+
+            <div>
+                <h2 class="fw-bold mb-2 text-white">
+                    <i class="bi bi-speedometer2 me-2"></i>
+                    Admin Dashboard
+                </h2>
+
+                <p class="mb-0 opacity-75">
+                    Welcome to the Scholarship Management System.
+                    Manage applications, scholarships and fund allocation.
+                </p>
+            </div>
+
+            <div class="fs-1 d-none d-md-block">
+                <i class="bi bi-mortarboard"></i>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Dashboard Statistics Heading -->
+    <div class="d-flex align-items-center gap-2 mb-3">
+        <i class="bi bi-bar-chart-line fs-4" style="color: #8e44ad;"></i>
+        <h4 class="fw-bold mb-0" style="color: #243b64;">Dashboard Overview</h4>
+    </div>
+
+    <!-- Dashboard Statistics -->
+    <div class="row g-3 mb-5">
+
+        <!-- Total Students -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden"
+                 style="border-top: 4px solid #0250c5 !important;">
+
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="rounded-3 p-3 text-white"
+                             style="background: linear-gradient(135deg, #0250c5, #4776e6);">
+                            <i class="bi bi-people-fill fs-4"></i>
+                        </div>
+                        <span class="text-secondary small">Students</span>
+                    </div>
+
+                    <h6 class="text-secondary mb-2">Total Students</h6>
+                    <h2 class="fw-bold mb-0" style="color: #0250c5;">
+                        {{ total_students }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Scholarships -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden"
+                 style="border-top: 4px solid #7048e8 !important;">
+
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="rounded-3 p-3 text-white"
+                             style="background: linear-gradient(135deg, #7048e8, #a855f7);">
+                            <i class="bi bi-mortarboard-fill fs-4"></i>
+                        </div>
+                        <span class="text-secondary small">Programs</span>
+                    </div>
+
+                    <h6 class="text-secondary mb-2">Total Scholarships</h6>
+                    <h2 class="fw-bold mb-0" style="color: #7048e8;">
+                        {{ total_scholarships }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Applications -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden"
+                 style="border-top: 4px solid #0d9488 !important;">
+
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="rounded-3 p-3 text-white"
+                             style="background: linear-gradient(135deg, #0d9488, #20c997);">
+                            <i class="bi bi-file-earmark-text-fill fs-4"></i>
+                        </div>
+                        <span class="text-secondary small">Applications</span>
+                    </div>
+
+                    <h6 class="text-secondary mb-2">Total Applications</h6>
+                    <h2 class="fw-bold mb-0" style="color: #0d9488;">
+                        {{ total_applications }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Reviews -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden"
+                 style="border-top: 4px solid #f59f00 !important;">
+
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="rounded-3 p-3 text-white"
+                             style="background: linear-gradient(135deg, #f59f00, #ffbf36);">
+                            <i class="bi bi-hourglass-split fs-4"></i>
+                        </div>
+                        <span class="text-secondary small">Needs attention</span>
+                    </div>
+
+                    <h6 class="text-secondary mb-2">Pending Reviews</h6>
+                    <h2 class="fw-bold mb-0" style="color: #d97706;">
+                        {{ pending_reviews }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Eligible Applications -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden"
+                 style="border-top: 4px solid #12b886 !important;">
+
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="rounded-3 p-3 text-white"
+                             style="background: linear-gradient(135deg, #12b886, #38d9a9);">
+                            <i class="bi bi-check-circle-fill fs-4"></i>
+                        </div>
+                        <span class="text-secondary small">Eligibility</span>
+                    </div>
+
+                    <h6 class="text-secondary mb-2">Eligible Applications</h6>
+                    <h2 class="fw-bold mb-0" style="color: #099268;">
+                        {{ eligible_applications }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approved Applications -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden"
+                 style="border-top: 4px solid #198754 !important;">
+
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="rounded-3 p-3 text-white"
+                             style="background: linear-gradient(135deg, #198754, #20a464);">
+                            <i class="bi bi-patch-check-fill fs-4"></i>
+                        </div>
+                        <span class="text-secondary small">Decisions</span>
+                    </div>
+
+                    <h6 class="text-secondary mb-2">Approved Applications</h6>
+                    <h2 class="fw-bold mb-0" style="color: #198754;">
+                        {{ approved_applications }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Funds Allocated -->
+        <div class="col-12 col-sm-12 col-xl-6">
+            <div class="card h-100 border-0 shadow-sm rounded-4 text-white overflow-hidden"
+                 style="background: linear-gradient(135deg, #0250c5 0%, #8e44ad 55%, #d43f8d 100%);">
+
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="d-flex justify-content-between align-items-center gap-3 w-100">
+
+                        <div>
+                            <p class="mb-2 opacity-75 text-white">
+                                Total Funds Allocated
+                            </p>
+
+                            <h2 class="fw-bold mb-2 text-white">
+                                ₹{{ "{:,.2f}".format(total_funds_allocated) }}
+                            </h2>
+
+                            <small class="opacity-75">
+                                <i class="bi bi-shield-check me-1"></i>
+                                Scholarship funding overview
+                            </small>
+                        </div>
+
+                        <div class="rounded-4 p-3 d-none d-sm-block"
+                             style="background-color: rgba(255,255,255,0.18);">
+                            <i class="bi bi-cash-stack" style="font-size: 2.5rem;"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Recent Applications -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
+
+        <div class="card-header border-0 p-3 p-md-4"
+             style="background: linear-gradient(135deg, #edf3ff, #fff0f7);">
+
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
+
+                <div>
+                    <h4 class="fw-bold mb-1" style="color: #243b64;">
+                        <i class="bi bi-clock-history me-2" style="color: #0250c5;"></i>
+                        Recent Applications
+                    </h4>
+
+                    <p class="text-secondary mb-0 small">
+                        Review and monitor student applications.
+                    </p>
+                </div>
+
+                <span class="badge rounded-pill px-3 py-2"
+                      style="background-color: #dbeafe; color: #1d4ed8;">
+                    <i class="bi bi-list-check me-1"></i>
+                    Latest Applications
+                </span>
+
+            </div>
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0">
+
+                <thead>
+                    <tr style="background-color: #edf3ff; color: #243b64;">
+                        <th class="px-3 py-3">Student</th>
+                        <th class="px-3 py-3">Scholarship</th>
+                        <th class="px-3 py-3">Status</th>
+                        <th class="px-3 py-3 text-center">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for application in recent_applications %}
+
+                    <tr>
+
+                        <td class="px-3 py-3">
+                            <div class="d-flex align-items-center gap-2">
+
+                                <div class="rounded-circle d-flex justify-content-center align-items-center text-white flex-shrink-0"
+                                     style="width: 40px; height: 40px; background: linear-gradient(135deg, #0250c5, #d43f8d);">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+
+                                <span class="fw-semibold" style="color: #334155;">
+                                    {{ application.name }}
+                                </span>
+
+                            </div>
+                        </td>
+
+                        <td class="px-3 py-3">
+                            <span class="fw-medium" style="color: #334155;">
+                                {{ application.scholarship_name }}
+                            </span>
+                        </td>
+
+                        <td class="px-3 py-3">
+
+                            {% if application.status == 'Approved' %}
+
+                            <span class="badge rounded-pill px-3 py-2"
+                                  style="background-color: #d1fae5; color: #047857; border: 1px solid #a7f3d0;">
+                                <i class="bi bi-check-circle me-1"></i>
+                                Approved
+                            </span>
+
+                            {% elif application.status == 'Rejected' %}
+
+                            <span class="badge rounded-pill px-3 py-2"
+                                  style="background-color: #fee2e2; color: #b91c1c; border: 1px solid #fecaca;">
+                                <i class="bi bi-x-circle me-1"></i>
+                                Rejected
+                            </span>
+
+                            {% elif application.status == 'Allocated' %}
+
+                            <span class="badge rounded-pill px-3 py-2"
+                                  style="background-color: #dbeafe; color: #1d4ed8; border: 1px solid #bfdbfe;">
+                                <i class="bi bi-cash-coin me-1"></i>
+                                Allocated
+                            </span>
+
+                            {% else %}
+
+                            <span class="badge rounded-pill px-3 py-2"
+                                  style="background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a;">
+                                <i class="bi bi-clock me-1"></i>
+                                {{ application.status }}
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td class="px-3 py-3 text-center">
+
+                            {% if application.status == 'Pending' %}
+
+                            <a href="{{ url_for('application_review', application_id=application.application_id) }}"
+                               class="btn btn-sm text-white rounded-pill px-3"
+                               style="background: linear-gradient(135deg, #0250c5, #8e44ad); border: none;">
+
+                                <i class="bi bi-eye me-1"></i>
+                                Review
+
+                            </a>
+
+                            {% else %}
+
+                            <button type="button"
+                                    class="btn btn-outline-secondary btn-sm rounded-pill px-3"
+                                    disabled>
+
+                                <i class="bi bi-check2 me-1"></i>
+                                Reviewed
+
+                            </button>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="4" class="text-center py-5">
+
+                            <div class="mb-3">
+                                <i class="bi bi-inbox"
+                                   style="font-size: 3rem; color: #8e44ad;"></i>
+                            </div>
+
+                            <h5 class="fw-bold mt-2" style="color: #243b64;">
+                                No Applications Found
+                            </h5>
+
+                            <p class="text-secondary mb-0">
+                                Student applications will appear here.
+                            </p>
+
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Quick Actions Heading -->
+    <div class="mb-3">
+        <h4 class="fw-bold mb-1" style="color: #243b64;">
+            <i class="bi bi-lightning-charge-fill me-2" style="color: #d43f8d;"></i>
+            Quick Actions
+        </h4>
+
+        <p class="text-secondary">
+            Manage scholarships and allocate available funds.
+        </p>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row g-3 mb-4">
+
+        <!-- Manage Scholarships -->
+        <div class="col-12 col-md-6">
+
+            <a href="{{ url_for('manage_scholarship') }}"
+               class="card h-100 border-0 shadow-sm rounded-4 text-decoration-none text-dark">
+
+                <div class="card-body p-4 d-flex align-items-center gap-3">
+
+                    <div class="rounded-3 p-3 text-white flex-shrink-0"
+                         style="background: linear-gradient(135deg, #0250c5, #4776e6);">
+                        <i class="bi bi-mortarboard-fill fs-3"></i>
+                    </div>
+
+                    <div class="flex-grow-1">
+                        <h5 class="fw-bold mb-1" style="color: #243b64;">
+                            Manage Scholarships
+                        </h5>
+
+                        <p class="text-secondary small mb-0">
+                            Create, update and manage scholarship programs.
+                        </p>
+                    </div>
+
+                    <i class="bi bi-arrow-right fs-4" style="color: #0250c5;"></i>
+
+                </div>
+            </a>
+        </div>
+
+        <!-- Allocate Funds -->
+        <div class="col-12 col-md-6">
+
+            <a href="{{ url_for('fund_allocation') }}"
+               class="card h-100 border-0 shadow-sm rounded-4 text-decoration-none text-dark">
+
+                <div class="card-body p-4 d-flex align-items-center gap-3">
+
+                    <div class="rounded-3 p-3 text-white flex-shrink-0"
+                         style="background: linear-gradient(135deg, #8e44ad, #d43f8d);">
+                        <i class="bi bi-wallet2 fs-3"></i>
+                    </div>
+
+                    <div class="flex-grow-1">
+                        <h5 class="fw-bold mb-1" style="color: #243b64;">
+                            Allocate Funds
+                        </h5>
+
+                        <p class="text-secondary small mb-0">
+                            Review scholarship funding and allocation.
+                        </p>
+                    </div>
+
+                    <i class="bi bi-arrow-right fs-4" style="color: #d43f8d;"></i>
+
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,111 @@
+
+{% extends "auth_base.html" %}
+
+{% block title %}Student Login{% endblock %}
+
+{% block welcome_title %}
+Welcome to the Scholarship and Fund Allocation Platform
+{% endblock %}
+
+{% block welcome_text %}
+Login to access your scholarship applications and explore educational opportunities.
+{% endblock %}
+
+{% block auth_content %}
+
+<div class="form-container">
+
+    <!-- Login Heading -->
+    <div class="text-center mb-4">
+
+        <div class="login-icon mb-3">
+            <i class="bi bi-person-circle"></i>
+        </div>
+
+        <h2>Student Login</h2>
+
+        <p>
+            Welcome back! Please enter your login details.
+        </p>
+
+    </div>
+
+    <!-- Login Form -->
+    <form method="POST" action="{{ url_for('login') }}">
+
+        <!-- Email Address -->
+        <div class="form-group">
+
+            <label for="email">
+                <i class="bi bi-envelope me-1"></i>
+                Email Address
+            </label>
+
+            <input type="email"
+                   id="email"
+                   name="email"
+                   placeholder="Enter your registered email"
+                   maxlength="255"
+                   autocomplete="email"
+                   required>
+
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+
+            <label for="password">
+                <i class="bi bi-lock me-1"></i>
+                Password
+            </label>
+
+            <input type="password"
+                   id="password"
+                   name="password"
+                   placeholder="Enter your password"
+                   autocomplete="current-password"
+                   required>
+
+        </div>
+
+        <!-- Forgot Password -->
+        <div class="forgot-link">
+            <a href="{{ url_for('forgot_password') }}">
+                Forgot Password?
+            </a>
+        </div>
+
+        <!-- Login Button -->
+        <button type="submit" class="btn btn-primary w-100">
+            <i class="bi bi-box-arrow-in-right me-2"></i>
+            Student Login
+        </button>
+
+    </form>
+
+    <!-- Registration Link -->
+    <p class="form-footer mt-4">
+        Don't have an account?
+        <a href="{{ url_for('register') }}">Register here</a>
+    </p>
+
+    <hr class="my-4">
+
+    <!-- Admin Login -->
+    <div class="text-center">
+
+        <p class="text-muted mb-2">
+            Are you an admin?
+        </p>
+
+        <a href="{{ url_for('admin_login') }}"
+           class="btn btn-outline-primary w-100">
+            <i class="bi bi-shield-lock me-2"></i>
+            Admin Login
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

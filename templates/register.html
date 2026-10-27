@@ -1,0 +1,233 @@
+
+{% extends "auth_base.html" %}
+
+{% block title %}Student Registration{% endblock %}
+
+{% block welcome_title %}
+Create Your Account!
+{% endblock %}
+
+{% block welcome_text %}
+Start your educational journey with Scholarship Portal. Register today to discover scholarship opportunities and get support for your education.
+{% endblock %}
+
+{% block auth_content %}
+
+<div class="form-container">
+
+    <!-- Registration Header -->
+    <div class="text-center mb-4">
+
+        <div class="login-icon mb-3">
+            <i class="bi bi-person-plus-fill"></i>
+        </div>
+
+        <h2>Create Account</h2>
+
+        <p class="register-description">
+            Enter your details to register as a student.
+        </p>
+
+    </div>
+
+    <!-- Registration Form -->
+    <form method="POST" action="{{ url_for('register') }}">
+
+        <!-- Full Name -->
+        <div class="form-group">
+            <label for="name">
+                <i class="bi bi-person me-1"></i>
+                Full Name
+            </label>
+
+            <input type="text"
+                   id="name"
+                   name="name"
+                   placeholder="Enter your full name"
+                   maxlength="100"
+                   autocomplete="name"
+                   required>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label for="email">
+                <i class="bi bi-envelope me-1"></i>
+                Email Address
+            </label>
+
+            <input type="email"
+                   id="email"
+                   name="email"
+                   placeholder="Enter your email address"
+                   maxlength="255"
+                   autocomplete="email"
+                   required>
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+            <label for="phone">
+                <i class="bi bi-telephone me-1"></i>
+                Phone Number
+            </label>
+
+            <input type="tel"
+                   id="phone"
+                   name="phone"
+                   placeholder="Enter your phone number"
+                   maxlength="15"
+                   autocomplete="tel">
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <label for="password">
+                <i class="bi bi-lock me-1"></i>
+                Password
+            </label>
+
+            <input type="password"
+                   id="password"
+                   name="password"
+                   placeholder="Create a password"
+                   minlength="8"
+                   autocomplete="new-password"
+                   required>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+            <label for="confirm_password">
+                <i class="bi bi-shield-lock me-1"></i>
+                Confirm Password
+            </label>
+
+            <input type="password"
+                   id="confirm_password"
+                   name="confirm_password"
+                   placeholder="Re-enter your password"
+                   minlength="8"
+                   autocomplete="new-password"
+                   required>
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="form-group">
+            <label for="date_of_birth">
+                <i class="bi bi-calendar-event me-1"></i>
+                Date of Birth
+            </label>
+
+            <input type="date"
+                   id="date_of_birth"
+                   name="date_of_birth">
+        </div>
+
+        <!-- Gender -->
+        <div class="form-group">
+            <label for="gender">
+                <i class="bi bi-person-vcard me-1"></i>
+                Gender
+            </label>
+
+            <select id="gender" name="gender">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+            </select>
+        </div>
+
+        <!-- Category -->
+        <div class="form-group">
+            <label for="category">
+                <i class="bi bi-people me-1"></i>
+                Category
+            </label>
+
+            <select id="category" name="category">
+                <option value="">Select Category</option>
+                <option value="General">General</option>
+                <option value="OBC">OBC</option>
+                <option value="SC">SC</option>
+                <option value="ST">ST</option>
+                <option value="EWS">EWS</option>
+            </select>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group">
+            <label for="address">
+                <i class="bi bi-geo-alt me-1"></i>
+                Address
+            </label>
+
+            <textarea id="address"
+                      name="address"
+                      placeholder="Enter your address"
+                      rows="3"></textarea>
+        </div>
+
+        <!-- College -->
+        <div class="form-group">
+            <label for="college">
+                <i class="bi bi-building me-1"></i>
+                College Name
+            </label>
+
+            <input type="text"
+                   id="college"
+                   name="college"
+                   placeholder="Enter your college name"
+                   maxlength="150">
+        </div>
+
+        <!-- Course -->
+        <div class="form-group">
+            <label for="course">
+                <i class="bi bi-book me-1"></i>
+                Course
+            </label>
+
+            <input type="text"
+                   id="course"
+                   name="course"
+                   placeholder="Example: B.Tech IT"
+                   maxlength="100">
+        </div>
+
+        <!-- Current Year -->
+        <div class="form-group">
+            <label for="year">
+                <i class="bi bi-mortarboard me-1"></i>
+                Current Year
+            </label>
+
+            <select id="year" name="year">
+                <option value="">Select Year</option>
+                <option value="1">1st Year</option>
+                <option value="2">2nd Year</option>
+                <option value="3">3rd Year</option>
+                <option value="4">4th Year</option>
+            </select>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100">
+            <i class="bi bi-person-check-fill me-2"></i>
+            Create Account
+        </button>
+
+    </form>
+
+    <!-- Login Link -->
+    <p class="form-footer mt-4">
+        Already have an account?
+        <a href="{{ url_for('login') }}">Sign In</a>
+    </p>
+
+</div>
+
+{% endblock %}

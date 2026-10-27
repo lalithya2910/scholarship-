@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block title %}Available Scholarships{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Page Heading -->
+    <div class="text-center mb-5">
+        <h1 class="fw-bold mb-3" style="color: #5b2c9f;">
+            <i class="bi bi-mortarboard-fill me-2"></i>
+            Available Scholarships
+        </h1>
+
+        <p class="text-secondary fs-5">
+            Explore available scholarships and find the right
+            financial support for your education.
+        </p>
+    </div>
+
+    <!-- Scholarship Cards -->
+    <div class="row g-4">
+
+        {% for scholarship in scholarships %}
+
+        <div class="col-12 col-md-6 col-xl-4">
+
+            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+
+                <!-- Card Header -->
+                <div class="card-header border-0 text-white p-4"
+                     style="background: linear-gradient(135deg, #0250c5, #6f42c1, #d43f8d);">
+
+                    <div class="d-flex align-items-start gap-3">
+
+                        <div class="bg-white bg-opacity-25 rounded-3 p-3">
+                            <i class="bi bi-mortarboard-fill fs-3"></i>
+                        </div>
+
+                        <div>
+                            <h5 class="fw-bold mb-2 text-white">
+                                {{ scholarship.scholarship_name }}
+                            </h5>
+
+                            {% if scholarship.status == 'Active' %}
+                                <span class="badge rounded-pill bg-success">
+                                    <i class="bi bi-check-circle me-1"></i>
+                                    Active
+                                </span>
+                            {% elif scholarship.status == 'Expired' %}
+                                <span class="badge rounded-pill bg-danger">
+                                    Expired
+                                </span>
+                            {% else %}
+                                <span class="badge rounded-pill bg-secondary">
+                                    Closed
+                                </span>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body p-4">
+
+                    <p class="text-secondary mb-4">
+                        {{ scholarship.description }}
+                    </p>
+
+                    <hr class="text-secondary opacity-25">
+
+                    <!-- Minimum Percentage -->
+                    <div class="d-flex align-items-start gap-3 mb-3">
+                        <i class="bi bi-award-fill fs-5 text-primary"></i>
+
+                        <div>
+                            <small class="text-secondary d-block">
+                                Minimum Percentage
+                            </small>
+
+                            <strong>
+                                {% if scholarship.scholarship_name == 'AICTE Pragati Scholarship for Girls' %}
+                                    Pass / Applicable Criteria
+                                {% elif scholarship.scholarship_name == 'State ePASS Scholarship' %}
+                                    Pass / Applicable Criteria
+                                {% elif scholarship.scholarship_name == 'Sitaram Jindal Foundation Scholarship' %}
+                                    55% - 60% (Based on Gender)
+                                {% else %}
+                                    {{ scholarship.minimum_percentage }}%
+                                {% endif %}
+                            </strong>
+                        </div>
+                    </div>
+
+                    <!-- Family Income -->
+                    <div class="d-flex align-items-start gap-3 mb-3">
+                        <i class="bi bi-cash-stack fs-5 text-success"></i>
+
+                        <div>
+                            <small class="text-secondary d-block">
+                                Maximum Family Income
+                            </small>
+
+                            <strong>
+                                {% if scholarship.maximum_income is not none %}
+                                    ₹{{ "{:,.0f}".format(scholarship.maximum_income) }}
+                                {% else %}
+                                    As per State Rules
+                                {% endif %}
+                            </strong>
+                        </div>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="d-flex align-items-start gap-3 mb-3">
+                        <i class="bi bi-people-fill fs-5 text-info"></i>
+
+                        <div>
+                            <small class="text-secondary d-block">
+                                Eligible Category
+                            </small>
+
+                            <strong>{{ scholarship.category }}</strong>
+                        </div>
+                    </div>
+
+                    <!-- Available Fund -->
+                    <div class="d-flex align-items-start gap-3 mb-3">
+                        <i class="bi bi-wallet-fill fs-5 text-warning"></i>
+
+                        <div>
+                            <small class="text-secondary d-block">
+                                Available Fund
+                            </small>
+
+                            <strong>
+                                ₹{{ "{:,.0f}".format(scholarship.available_amount) }}
+                            </strong>
+                        </div>
+                    </div>
+
+                    <!-- Deadline -->
+                    <div class="d-flex align-items-start gap-3 mb-2">
+                        <i class="bi bi-calendar-event-fill fs-5 text-danger"></i>
+
+                        <div>
+                            <small class="text-secondary d-block">
+                                Application Deadline
+                            </small>
+
+                            <strong>{{ scholarship.deadline }}</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Card Footer -->
+                <div class="card-footer bg-white border-0 p-4 pt-0">
+
+                    {% if scholarship.status == 'Active' %}
+
+                    <a href="{{ url_for(
+                        'apply_scholarship',
+                        scholarship_id=scholarship.scholarship_id
+                    ) }}"
+                       class="btn text-white w-100 rounded-3 py-2 fw-semibold"
+                       style="background: linear-gradient(90deg, #0250c5, #8e44ad, #d43f8d);">
+
+                        <i class="bi bi-send-fill me-2"></i>
+                        Apply Now
+                    </a>
+
+                    {% else %}
+
+                    <button class="btn btn-secondary w-100 rounded-3 py-2"
+                            disabled>
+                        <i class="bi bi-lock-fill me-2"></i>
+                        Applications Closed
+                    </button>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <!-- Empty State -->
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-5">
+
+                <i class="bi bi-mortarboard display-3 mb-3"
+                   style="color: #6f42c1;"></i>
+
+                <h3 class="fw-bold">No Scholarships Available</h3>
+
+                <p class="text-secondary mb-0">
+                    Please check again later for available scholarships.
+                </p>
+
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

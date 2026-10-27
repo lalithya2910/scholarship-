@@ -1,0 +1,62 @@
+
+{% extends "auth_base.html" %}
+
+{% block title %}Verify OTP{% endblock %}
+
+{% block welcome_title %}
+Verify Your Email!
+{% endblock %}
+
+{% block welcome_text %}
+One more step to secure your account. Enter the verification code sent to your registered email address to continue resetting your password.
+{% endblock %}
+
+{% block auth_content %}
+
+<div class="form-container verify-otp-container">
+
+    <div class="login-icon">
+        <i class="bi bi-envelope-check-fill"></i>
+    </div>
+
+    <h2>Verify OTP</h2>
+
+    <p class="register-description">
+        Enter the 6-digit OTP sent to your registered email address.
+    </p>
+
+    <form method="POST" action="{{ url_for('verify_otp') }}">
+
+        <div class="form-group">
+            <label for="otp">Enter OTP</label>
+
+            <input
+                type="text"
+                id="otp"
+                name="otp"
+                placeholder="Enter 6-digit OTP"
+                inputmode="numeric"
+                pattern="[0-9]{6}"
+                maxlength="6"
+                autocomplete="one-time-code"
+                required
+            >
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+            <i class="bi bi-shield-check"></i>
+            Verify OTP
+        </button>
+
+    </form>
+
+    <p class="form-footer">
+        Didn't receive the OTP?
+        <a href="{{ url_for('forgot_password') }}">
+            Request another OTP
+        </a>
+    </p>
+
+</div>
+
+{% endblock %}

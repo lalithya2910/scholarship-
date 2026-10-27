@@ -1,0 +1,149 @@
+
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-4 student-dashboard">
+
+    <!-- Welcome Section -->
+    <div class="student-welcome-section p-4 p-md-5 mb-4 rounded-4 text-white shadow">
+        <div class="welcome-content">
+            <span class="welcome-badge">
+                <i class="bi bi-mortarboard-fill"></i>
+                Student Dashboard
+            </span>
+
+            <h2 class="fw-bold mt-3 text-white">
+                Welcome, {{ session.get('student_name') }}!
+            </h2>
+
+            <p class="mb-0">
+                Track your scholarship applications and explore new opportunities.
+            </p>
+        </div>
+
+        <div class="welcome-icon">
+            <i class="bi bi-journal-check"></i>
+        </div>
+    </div>
+
+    <!-- Dashboard Heading -->
+    <div class="dashboard-section-heading mb-3">
+        <h4 class="fw-bold mb-1">Application Overview</h4>
+        <p class="text-muted mb-0">
+            Check the latest status of your scholarship applications.
+        </p>
+    </div>
+
+    <!-- Dashboard Cards -->
+    <div class="row g-3 g-lg-4 mb-4">
+
+        <!-- Total Applications -->
+        <div class="col-12 col-sm-6 col-xl">
+            <div class="card student-stat-card h-100">
+                <div class="card-body">
+                    <div class="stat-icon stat-blue">
+                        <i class="bi bi-file-earmark-text-fill"></i>
+                    </div>
+                    <p class="stat-label">Total Applications</p>
+                    <h2 class="stat-number text-primary">
+                        {{ total_applications }}
+                    </h2>
+                    <span class="stat-description">Applications submitted</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approved Applications -->
+        <div class="col-12 col-sm-6 col-xl">
+            <div class="card student-stat-card h-100">
+                <div class="card-body">
+                    <div class="stat-icon stat-green">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+                    <p class="stat-label">Approved Applications</p>
+                    <h2 class="stat-number text-success">
+                        {{ approved_applications }}
+                    </h2>
+                    <span class="stat-description">Successfully approved</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Allocated Applications -->
+        <div class="col-12 col-sm-6 col-xl">
+            <div class="card student-stat-card h-100">
+                <div class="card-body">
+                    <div class="stat-icon stat-cyan">
+                        <i class="bi bi-wallet-fill"></i>
+                    </div>
+                    <p class="stat-label">Allocated Applications</p>
+                    <h2 class="stat-number text-info">
+                        {{ allocated_applications }}
+                    </h2>
+                    <span class="stat-description">Funds allocated</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Applications -->
+        <div class="col-12 col-sm-6 col-xl">
+            <div class="card student-stat-card h-100">
+                <div class="card-body">
+                    <div class="stat-icon stat-orange">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                    <p class="stat-label">Pending Applications</p>
+                    <h2 class="stat-number text-warning">
+                        {{ pending_applications }}
+                    </h2>
+                    <span class="stat-description">Awaiting review</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rejected Applications -->
+        <div class="col-12 col-sm-6 col-xl">
+            <div class="card student-stat-card h-100">
+                <div class="card-body">
+                    <div class="stat-icon stat-red">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </div>
+                    <p class="stat-label">Rejected Applications</p>
+                    <h2 class="stat-number text-danger">
+                        {{ rejected_applications }}
+                    </h2>
+                    <span class="stat-description">Not approved</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="student-quick-actions">
+        <div>
+            <h4 class="fw-bold mb-1">Quick Actions</h4>
+            <p class="text-muted mb-0">
+                Explore scholarships or review your application status.
+            </p>
+        </div>
+
+        <div class="quick-action-buttons">
+            <a href="{{ url_for('scholarships') }}" class="btn student-action-primary">
+                <i class="bi bi-search me-2"></i>
+                View Scholarships
+            </a>
+
+            <a href="{{ url_for('application_status') }}" class="btn student-action-secondary">
+                <i class="bi bi-clipboard-check me-2"></i>
+                Check Application Status
+            </a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

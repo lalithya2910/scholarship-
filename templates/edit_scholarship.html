@@ -1,0 +1,421 @@
+
+{% extends "base.html" %}
+
+{% block title %}Edit Scholarship{% endblock %}
+
+{% block content %}
+
+<div class="container py-5" style="max-width: 1100px;">
+
+    <!-- Page Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="badge rounded-pill px-3 py-2"
+                      style="background-color: #eaf0ff; color: #0250c5;">
+                    <i class="bi bi-pencil-square me-1"></i>
+                    SCHOLARSHIP MANAGEMENT
+                </span>
+            </div>
+
+            <h2 class="fw-bold mb-2 " style="color: #24324a;">
+                Edit Scholarship
+            </h2>
+
+            <p class="text-secondary mb-0">
+                Update scholarship details, eligibility requirements and funding information.
+            </p>
+        </div>
+
+        <a href="{{ url_for('manage_scholarship') }}"
+           class="btn btn-light border rounded-3 px-3 py-2 fw-semibold align-self-md-center">
+            <i class="bi bi-arrow-left me-2"></i>
+            Back to Scholarships
+        </a>
+
+    </div>
+
+    <!-- Main Form Card -->
+    <div class="card border-0 rounded-4 overflow-hidden"
+         style="box-shadow: 0 10px 35px rgba(36, 50, 74, 0.10);">
+
+        <!-- Gradient Header -->
+        <div class="p-4 text-white"
+             style="background: linear-gradient(120deg, #0250c5 0%, #5145b5 55%, #d43f8d 100%);">
+
+            <div class="d-flex align-items-center gap-3">
+
+                <div class="d-flex align-items-center justify-content-center rounded-3"
+                     style="width: 54px; height: 54px; background: rgba(255,255,255,0.18);">
+                    <i class="bi bi-mortarboard-fill fs-3"></i>
+                </div>
+
+                <div>
+                    <h5 class="fw-bold mb-1 text-white">Scholarship Details</h5>
+                    <p class="mb-0 small" style="color: #f0efff;">
+                        Modify the information below and save your changes.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card-body p-4 p-lg-5" style="background-color: #ffffff;">
+
+            <form method="POST"
+                  action="{{ url_for('edit_scholarship', scholarship_id=scholarship.scholarship_id) }}">
+
+                <!-- Section 1 -->
+                <div class="d-flex align-items-center gap-2 mb-4 pb-3"
+                     style="border-bottom: 1px solid #e9edf5;">
+
+                    <i class="bi bi-info-circle-fill fs-5" style="color: #0250c5;"></i>
+
+                    <div>
+                        <h6 class="fw-bold mb-1" style="color: #24324a;">
+                            Basic Information
+                        </h6>
+                        <small class="text-secondary">
+                            Scholarship name and description
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="row g-4 mb-5">
+
+                    <div class="col-12">
+                        <label class="form-label fw-semibold" style="color: #344054;">
+                            Scholarship Name <span class="text-danger">*</span>
+                        </label>
+
+                        <input type="text"
+                               name="scholarship_name"
+                               class="form-control rounded-3 py-2"
+                               style="border-color: #d9e0ec;"
+                               value="{{ scholarship.scholarship_name }}"
+                               placeholder="Enter scholarship name"
+                               required>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label fw-semibold" style="color: #344054;">
+                            Description
+                        </label>
+
+                        <textarea name="description"
+                                  class="form-control rounded-3"
+                                  style="border-color: #d9e0ec;"
+                                  rows="4"
+                                  placeholder="Describe the scholarship and its purpose">{{ scholarship.description or '' }}</textarea>
+
+                        <div class="form-text">
+                            Provide a brief explanation of the scholarship.
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Section 2 -->
+                <div class="d-flex align-items-center gap-2 mb-4 pb-3"
+                     style="border-bottom: 1px solid #e9edf5;">
+
+                    <i class="bi bi-person-check-fill fs-5" style="color: #5145b5;"></i>
+
+                    <div>
+                        <h6 class="fw-bold mb-1" style="color: #24324a;">
+                            Eligibility Criteria
+                        </h6>
+                        <small class="text-secondary">
+                            Define the academic, income and category requirements
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="row g-4 mb-5">
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold" style="color: #344054;">
+                            Minimum Percentage (%) <span class="text-danger">*</span>
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text"
+                                  style="background-color: #f5f7fc; border-color: #d9e0ec;">
+                                <i class="bi bi-mortarboard" style="color: #0250c5;"></i>
+                            </span>
+
+                            <input type="number"
+                                   name="minimum_percentage"
+                                   class="form-control rounded-end-3 py-2"
+                                   style="border-color: #d9e0ec;"
+                                   min="0"
+                                   max="100"
+                                   step="0.01"
+                                   value="{{ scholarship.minimum_percentage }}"
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold" style="color: #344054;">
+                            Maximum Annual Income (₹) <span class="text-danger">*</span>
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text"
+                                  style="background-color: #f5f7fc; border-color: #d9e0ec;">
+                                <i class="bi bi-currency-rupee" style="color: #0250c5;"></i>
+                            </span>
+
+                            <input type="number"
+                                   name="maximum_income"
+                                   class="form-control rounded-end-3 py-2"
+                                   style="border-color: #d9e0ec;"
+                                   min="0"
+                                   step="0.01"
+                                   value="{{ scholarship.maximum_income }}"
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label fw-semibold" style="color: #344054;">
+                            Eligible Category <span class="text-danger">*</span>
+                        </label>
+
+                        <input type="text"
+                               name="category"
+                               class="form-control rounded-3 py-2"
+                               style="border-color: #d9e0ec;"
+                               value="{{ scholarship.category }}"
+                               placeholder="Example: All, SC, ST, BC, EBC"
+                               required>
+
+                        <div class="form-text">
+                            Enter the category according to your scholarship eligibility rules.
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Section 3 -->
+                <div class="d-flex align-items-center gap-2 mb-4 pb-3"
+                     style="border-bottom: 1px solid #e9edf5;">
+
+                    <i class="bi bi-wallet2 fs-5" style="color: #198754;"></i>
+
+                    <div>
+                        <h6 class="fw-bold mb-1" style="color: #24324a;">
+                            Funding Information
+                        </h6>
+                        <small class="text-secondary">
+                            Configure the available fund and per-student limit
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="row g-4 mb-5">
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold" style="color: #344054;">
+                            Available Amount (₹) <span class="text-danger">*</span>
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text"
+                                  style="background-color: #eefaf3; border-color: #d9e0ec;">
+                                <i class="bi bi-cash-stack text-success"></i>
+                            </span>
+
+                            <input type="number"
+                                   name="available_amount"
+                                   class="form-control rounded-end-3 py-2"
+                                   style="border-color: #d9e0ec;"
+                                   min="0"
+                                   step="0.01"
+                                   value="{{ scholarship.available_amount }}"
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold" style="color: #344054;">
+                            Maximum Amount Per Student (₹) <span class="text-danger">*</span>
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text"
+                                  style="background-color: #eefaf3; border-color: #d9e0ec;">
+                                <i class="bi bi-person-vcard text-success"></i>
+                            </span>
+
+                            <input type="number"
+                                   name="max_amount_per_student"
+                                   class="form-control rounded-end-3 py-2"
+                                   style="border-color: #d9e0ec;"
+                                   min="0"
+                                   step="0.01"
+                                   value="{{ scholarship.max_amount_per_student }}"
+                                   required>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Section 4 -->
+                <div class="d-flex align-items-center gap-2 mb-4 pb-3"
+                     style="border-bottom: 1px solid #e9edf5;">
+
+                    <i class="bi bi-file-earmark-check-fill fs-5" style="color: #d43f8d;"></i>
+
+                    <div>
+                        <h6 class="fw-bold mb-1" style="color: #24324a;">
+                            Required Documents
+                        </h6>
+                        <small class="text-secondary">
+                            Select all documents students must submit
+                        </small>
+                    </div>
+
+                </div>
+
+                {% set selected_documents = scholarship.required_documents %}
+
+                <div class="row g-3 mb-5">
+
+                    {% for doc in all_documents %}
+                    <div class="col-md-6">
+
+                        <label class="d-flex align-items-center gap-3 p-3 rounded-3 h-100"
+                               style="background-color: #f9faff; border: 1px solid #e0e6f0; cursor: pointer;">
+
+                            <input type="checkbox"
+                                   class="form-check-input mt-0 flex-shrink-0"
+                                   style="width: 18px; height: 18px; accent-color: #0250c5;"
+                                   name="required_documents"
+                                   value="{{ doc.document_name }}"
+                                   {% if doc.document_name in selected_documents %}checked{% endif %}>
+
+                            <span class="small fw-semibold" style="color: #344054;">
+                                <i class="bi bi-file-earmark-text me-1"
+                                   style="color: #0250c5;"></i>
+                                {{ doc.document_name }}
+                            </span>
+
+                        </label>
+
+                    </div>
+                    {% endfor %}
+
+                </div>
+
+                <!-- Section 5 -->
+                <div class="d-flex align-items-center gap-2 mb-4 pb-3"
+                     style="border-bottom: 1px solid #e9edf5;">
+
+                    <i class="bi bi-calendar-check-fill fs-5" style="color: #e58b21;"></i>
+
+                    <div>
+                        <h6 class="fw-bold mb-1" style="color: #24324a;">
+                            Application Period & Status
+                        </h6>
+                        <small class="text-secondary">
+                            Set the deadline and current scholarship status
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="row g-4 mb-4">
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold" style="color: #344054;">
+                            Application Deadline <span class="text-danger">*</span>
+                        </label>
+
+                        <input type="date"
+                               name="deadline"
+                               class="form-control rounded-3 py-2"
+                               style="border-color: #d9e0ec;"
+                               value="{{ scholarship.deadline.strftime('%Y-%m-%d') if scholarship.deadline else '' }}"
+                               required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold" style="color: #344054;">
+                            Scholarship Status <span class="text-danger">*</span>
+                        </label>
+
+                        <select name="status"
+                                class="form-select rounded-3 py-2"
+                                style="border-color: #d9e0ec;"
+                                required>
+
+                            <option value="Active"
+                                {% if scholarship.status == 'Active' %}selected{% endif %}>
+                                Active
+                            </option>
+
+                            <option value="Closed"
+                                {% if scholarship.status == 'Closed' %}selected{% endif %}>
+                                Closed
+                            </option>
+
+                            <option value="Expired"
+                                {% if scholarship.status == 'Expired' %}selected{% endif %}>
+                                Expired
+                            </option>
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- Note -->
+                <div class="d-flex gap-2 align-items-start rounded-3 p-3 mb-4"
+                     style="background-color: #f1f6ff; border: 1px solid #dce8ff;">
+
+                    <i class="bi bi-info-circle-fill mt-1" style="color: #0250c5;"></i>
+
+                    <small style="color: #42526b;">
+                        Please verify all eligibility criteria and funding details before updating this scholarship.
+                    </small>
+
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex flex-column flex-sm-row justify-content-end gap-3 pt-4"
+                     style="border-top: 1px solid #e9edf5;">
+
+                    <a href="{{ url_for('manage_scholarship') }}"
+                       class="btn btn-light border rounded-3 px-4 py-2 fw-semibold order-2 order-sm-1">
+                        <i class="bi bi-x-circle me-2"></i>
+                        Cancel
+                    </a>
+
+                    <button type="submit"
+                            class="btn text-white rounded-3 px-4 py-2 fw-semibold order-1 order-sm-2"
+                            style="background: linear-gradient(100deg, #0250c5, #5145b5, #d43f8d); border: none;">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        Update Scholarship
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <p class="text-center text-secondary small mt-4 mb-0">
+        <i class="bi bi-shield-check me-1"></i>
+        Scholarship Management Portal
+    </p>
+
+</div>
+
+{% endblock %}

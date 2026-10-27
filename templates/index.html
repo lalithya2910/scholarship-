@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home - Scholarship Portal
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= HERO SECTION ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        {% if session.get('student_id') %}
+
+            <!-- Student Home Page -->
+
+            <h1>Welcome to Scholarship Portal!</h1>
+
+            <p>
+                Explore scholarship opportunities, check your eligibility,
+                apply for scholarships, and track your application status.
+            </p>
+
+            <a href="{{ url_for('scholarships') }}" class="btn">
+                Explore Scholarships
+            </a>
+
+            <a href="{{ url_for('application_status') }}"
+               class="btn secondary-btn">
+                My Applications
+            </a>
+
+
+        {% elif session.get('admin_id') %}
+
+            <!-- Admin Home Page -->
+
+            <h1>Welcome, Admin!</h1>
+
+            <p>
+                Manage scholarships, review student applications,
+                verify submitted documents, and allocate scholarship funds.
+            </p>
+
+            <a href="{{ url_for('admin_dashboard') }}" class="btn">
+                Go to Dashboard
+            </a>
+
+
+        {% else %}
+
+            <!-- Guest Home Page -->
+
+            <h1>
+                Scholarship Eligibility & Fund Allocation Platform
+            </h1>
+
+            <p>
+                Helping students discover scholarship opportunities
+                and receive financial support for their education.
+            </p>
+
+            <a href="{{ url_for('register') }}" class="btn">
+                Get Started
+            </a>
+
+            <a href="{{ url_for('scholarships') }}"
+               class="btn secondary-btn">
+                Explore Scholarships
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT SECTION ================= -->
+
+<section class="about-section">
+
+    <h2>About Our Portal</h2>
+
+    <p class="section-description">
+        Our platform simplifies the scholarship application process
+        and supports transparent eligibility evaluation and fund allocation.
+    </p>
+
+    <div class="card-container">
+
+        <div class="info-card">
+
+            <h3>Scholarship Opportunities</h3>
+
+            <p>
+                Explore available scholarships and understand their
+                eligibility criteria, benefits, and application deadlines.
+            </p>
+
+        </div>
+
+        <div class="info-card">
+
+            <h3>Eligibility Evaluation</h3>
+
+            <p>
+                Evaluate student applications based on academic performance
+                and family income according to scholarship requirements.
+            </p>
+
+        </div>
+
+        <div class="info-card">
+
+            <h3>Fund Allocation</h3>
+
+            <p>
+                Help ensure that available scholarship funds are allocated
+                to eligible students through a transparent review process.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HOW IT WORKS ================= -->
+
+<section class="how-it-works">
+
+    <h2>How It Works</h2>
+
+    <p class="section-description">
+        Applying for a scholarship is simple.
+    </p>
+
+    <div class="steps-container">
+
+        <div class="step-card">
+
+            <div class="step-number">1</div>
+
+            <h3>Register</h3>
+
+            <p>
+                Create your student account using your personal details.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <div class="step-number">2</div>
+
+            <h3>Apply</h3>
+
+            <p>
+                Select a scholarship and submit the required details
+                and supporting documents.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <div class="step-number">3</div>
+
+            <h3>Verification</h3>
+
+            <p>
+                Your application and documents are checked against
+                the scholarship eligibility criteria.
+            </p>
+
+        </div>
+
+        <div class="step-card">
+
+            <div class="step-number">4</div>
+
+            <h3>Track Status</h3>
+
+            <p>
+                View your application status and check the final decision.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= REGISTRATION SECTION ================= -->
+
+{% if not session.get('student_id')
+      and not session.get('admin_id') %}
+
+<section class="cta-section">
+
+    <h2>Start Your Scholarship Journey!</h2>
+
+    <p>
+        Register as a student to explore available scholarships
+        and submit your applications.
+    </p>
+
+    <a href="{{ url_for('register') }}" class="btn">
+        Student Register
+    </a>
+
+    <a href="{{ url_for('login') }}" class="btn secondary-btn">
+        Login
+    </a>
+
+</section>
+
+{% endif %}
+
+
+{% endblock %}

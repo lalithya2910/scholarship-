@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+
+{% block title %}Apply Scholarship{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Page Heading -->
+    <div class="text-center mb-4">
+        <h2 class="fw-bold" style="color: #5b2c9f;">
+            <i class="bi bi-mortarboard-fill me-2"></i>
+            Apply for Scholarship
+        </h2>
+        <p class="text-secondary">
+            Complete the form below to submit your scholarship application.
+        </p>
+    </div>
+
+    <!-- Scholarship Information -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+
+        <div class="card-header border-0 text-white p-4"
+             style="background: linear-gradient(135deg, #0250c5, #8e44ad, #d43f8d);">
+
+            <h4 class="fw-bold mb-0 text-white">
+                <i class="bi bi-award-fill me-2"></i>
+                {{ scholarship.scholarship_name }}
+            </h4>
+
+        </div>
+
+        <div class="card-body p-4">
+
+            <h5 class="fw-bold mb-3">Scholarship Conditions</h5>
+
+            <div class="row g-3">
+
+                <div class="col-12 col-md-6">
+                    <div class="p-3 rounded-3 bg-light h-100">
+                        <small class="text-secondary d-block">
+                            Minimum Percentage
+                        </small>
+                        <strong>
+                            {{ scholarship.minimum_percentage }}%
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="p-3 rounded-3 bg-light h-100">
+                        <small class="text-secondary d-block">
+                            Maximum Family Income
+                        </small>
+                        <strong>
+                            {% if scholarship.maximum_income is not none %}
+                                ₹{{ "{:,.0f}".format(scholarship.maximum_income) }}
+                            {% else %}
+                                As per applicable rules
+                            {% endif %}
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="p-3 rounded-3 bg-light h-100">
+                        <small class="text-secondary d-block">
+                            Eligible Category
+                        </small>
+                        <strong>{{ scholarship.category }}</strong>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="p-3 rounded-3 bg-light h-100">
+                        <small class="text-secondary d-block">
+                            Available Fund
+                        </small>
+                        <strong>
+                            ₹{{ "{:,.0f}".format(scholarship.available_amount) }}
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="p-3 rounded-3 bg-light">
+                        <small class="text-secondary d-block">
+                            Application Deadline
+                        </small>
+                        <strong>{{ scholarship.deadline }}</strong>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Form -->
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <div class="card-body p-4 p-md-5">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                <!-- Academic Details -->
+                <div class="mb-4 pb-3 border-bottom">
+
+                    <h4 class="fw-bold mb-3" style="color: #5b2c9f;">
+                        <i class="bi bi-book-fill me-2"></i>
+                        Academic Details
+                    </h4>
+
+                    <div class="row g-3">
+
+                        <div class="col-12 col-md-6">
+                            <label for="previous_exam"
+                                   class="form-label fw-semibold">
+                                Previous Class
+                            </label>
+
+                            <input type="text"
+                                   class="form-control form-control-lg"
+                                   id="previous_exam"
+                                   name="previous_exam"
+                                   placeholder="e.g. Intermediate / B.Tech"
+                                   required>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="percentage"
+                                   class="form-label fw-semibold">
+                                Previous Exam Percentage (%)
+                            </label>
+
+                            <input type="number"
+                                   class="form-control form-control-lg"
+                                   id="percentage"
+                                   name="percentage"
+                                   min="0"
+                                   max="100"
+                                   step="0.01"
+                                   placeholder="Enter percentage"
+                                   required>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Financial Details -->
+                <div class="mb-4 pb-3 border-bottom">
+
+                    <h4 class="fw-bold mb-3" style="color: #5b2c9f;">
+                        <i class="bi bi-cash-stack me-2"></i>
+                        Family Financial Details
+                    </h4>
+
+                    <div class="row g-3">
+
+                        <div class="col-12 col-md-6">
+                            <label for="family_income"
+                                   class="form-label fw-semibold">
+                                Annual Family Income (₹)
+                            </label>
+
+                            <input type="number"
+                                   class="form-control form-control-lg"
+                                   id="family_income"
+                                   name="family_income"
+                                   min="0"
+                                   step="0.01"
+                                   placeholder="Enter annual income"
+                                   required>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="family_members"
+                                   class="form-label fw-semibold">
+                                Number of Family Members
+                            </label>
+
+                            <input type="number"
+                                   class="form-control form-control-lg"
+                                   id="family_members"
+                                   name="family_members"
+                                   min="1"
+                                   placeholder="Enter family members"
+                                   required>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="parent_occupation"
+                                   class="form-label fw-semibold">
+                                Parent Occupation
+                            </label>
+
+                            <input type="text"
+                                   class="form-control form-control-lg"
+                                   id="parent_occupation"
+                                   name="parent_occupation"
+                                   placeholder="e.g. Farmer, Employee"
+                                   required>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="income_certificate_no"
+                                   class="form-label fw-semibold">
+                                Income Certificate Number (Optional)
+                            </label>
+
+                            <input type="text"
+                                   class="form-control form-control-lg"
+                                   id="income_certificate_no"
+                                   name="income_certificate_no"
+                                   placeholder="Enter certificate number">
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Personal Details -->
+                <div class="mb-4 pb-3 border-bottom">
+
+                    <h4 class="fw-bold mb-3" style="color: #5b2c9f;">
+                        <i class="bi bi-person-fill me-2"></i>
+                        Personal Details
+                    </h4>
+
+                    <div class="row g-3">
+
+                        <div class="col-12 col-md-6">
+                            <label for="gender"
+                                   class="form-label fw-semibold">
+                                Gender
+                            </label>
+
+                            <select class="form-select form-select-lg"
+                                    id="gender"
+                                    name="gender"
+                                    required>
+
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="category"
+                                   class="form-label fw-semibold">
+                                Social Category
+                            </label>
+
+                            <select class="form-select form-select-lg"
+                                    id="category"
+                                    name="category"
+                                    required>
+
+                                <option value="">Select Category</option>
+                                <option value="OC">OC</option>
+                                <option value="SC">SC</option>
+                                <option value="ST">ST</option>
+                                <option value="BC">BC</option>
+                                <option value="EBC">EBC</option>
+
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Required Documents -->
+                <div class="mb-4 pb-3 border-bottom">
+
+                    <h4 class="fw-bold mb-2" style="color: #5b2c9f;">
+                        <i class="bi bi-cloud-arrow-up-fill me-2"></i>
+                        Upload Required Documents
+                    </h4>
+
+                    <p class="text-secondary small mb-3">
+                        Accepted formats: PDF, JPG, JPEG and PNG.
+                    </p>
+
+                    {% for document in required_documents %}
+
+                    <div class="mb-3 p-3 border rounded-3">
+
+                        <label for="document_{{ loop.index0 }}"
+                               class="form-label fw-semibold">
+                            <i class="bi bi-file-earmark-text me-2 text-primary"></i>
+                            {{ document }}
+                        </label>
+
+                        <input type="file"
+                               class="form-control"
+                               id="document_{{ loop.index0 }}"
+                               name="document_{{ loop.index0 }}"
+                               accept=".pdf,.jpg,.jpeg,.png"
+                               required>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <!-- Declaration -->
+                <div class="form-check p-3 ps-5 bg-light rounded-3 mb-4">
+
+                    <input class="form-check-input"
+                           type="checkbox"
+                           id="declaration"
+                           name="declaration"
+                           required>
+
+                    <label class="form-check-label"
+                           for="declaration">
+                        I confirm that the information provided is correct.
+                    </label>
+
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex flex-column flex-sm-row gap-3">
+
+                    <button type="submit"
+                            class="btn btn-lg text-white rounded-3 px-4"
+                            style="background: linear-gradient(90deg, #0250c5, #8e44ad, #d43f8d);">
+
+                        <i class="bi bi-send-fill me-2"></i>
+                        Submit Application
+
+                    </button>
+
+                    <a href="{{ url_for('scholarships') }}"
+                       class="btn btn-outline-secondary btn-lg rounded-3 px-4">
+
+                        <i class="bi bi-arrow-left me-2"></i>
+                        Back to Scholarships
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
