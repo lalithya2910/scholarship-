@@ -3,6 +3,4 @@ venv/
 .venv/
 __pycache__/
 *.pyc
-scholarship_documents/
 uploads/
-*.sql
