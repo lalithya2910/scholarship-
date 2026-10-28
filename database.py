@@ -16,3 +16,4 @@ if DB_CONFIG["host"] != "localhost":
 def get_db_connection():
     return mysql.connector.connect(**DB_CONFIG)
 
+
