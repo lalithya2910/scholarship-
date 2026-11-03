@@ -177,3 +177,42 @@ VALUES
     (4, 'College Bonafide Certificate'),
     (5, 'Caste Certificate'),
     (5, 'Income Certificate or Ration Card');
+
+INSERT INTO students
+(student_id, name, email, phone, password, date_of_birth,
+ gender, category, address, college, course, year)
+VALUES
+(1, 'Lalithya Vanacharla', 'vanacharlalalithya@gmail.com', '9010101010',
+'scrypt:32768:8:1$AE53cwP05MXxuu6e$42cf11fe95a506dc824b720938e162628784b45a47260ed1bfb26874a211a89e5755e328db1c51353cc7a1b128467ec3b2eb927e41bdc6f99713af5a249b5502',
+'2026-10-15', 'Female', 'ST', 'kaikaram', 'SRKR ENGINEERING COLLEGE', 'IT', 4),
+
+(2, 'Vanacharla', 'admin@scholarship.com', '9292929292',
+'scrypt:32768:8:1$gBwEAeCNyH09ZrB0$63476d52c81a837d3495b3e652ab1450a8f4d01fcd5302974e2c19c3ee2d59f60d901db5540ecc148d7073e88856cb1a72ca15bf7e0f4a590bab8f02c08a96ce',
+'2026-10-16', 'Female', 'SC', 'kai', 'SRKR ENGINEERING COLLEGE', 'IT', 2),
+
+(3, 'Vana', 'lalithya@gmail.com', '9010101010',
+'scrypt:32768:8:1$nWEYgKXM9oV62NAd$ca5281948668035abf7f043094ba82554f4046961fae6bcf7fb5fea65f265477a54313e5ac39e6e565f1759eb93232e8c33a0deb708f105b9563e7f4fde42125',
+'2026-10-28', 'Female', 'OBC', 'kaikaram', 'SRKR ENGINEERING COLLEGE', 'IT', 3),
+
+(4, 'Likhitha Vanacharla', 'likhitha@scholarship.com', '9292929292',
+'scrypt:32768:8:1$QhEkYU8Tg5WIW5Vn$3e87dfeed5ac50fe90db7e828a25339e2903d3fce027f0e41c0d2a1917b7dbc44067cdde9def6f5bcebce012e5b92b9be5a12547a83c326d8600e5373e7418eb',
+'2026-10-26', 'Female', 'ST', 'kerela', 'SRKR ENGINEERING COLLEGE', 'IT', 2),
+
+(5, 'vanacharla lalithya', 'lalithyavanacharla29@gmail.com', '9292929292',
+'scrypt:32768:8:1$gG9xVlLj4aXBdPHH$2da8e9ddbb1dc85abb6be065c79375368e3405204e2f691e09c97c60dfcd2cc3be6dce7193f46adeed9dd2f9c9506e130cef1c222c50459c27b260a773c5527f',
+'2026-10-19', 'Female', 'ST', 'kashmir', 'SRKR ENGINEERING COLLEGE', 'IT', 3),
+
+(6, 'keerthi', 'keerthi@gmail.com', '9010101010',
+'scrypt:32768:8:1$bFgGtpfnSo0ejOhJ$06fa8b569e9c5f2a24aad622c70b654bb0e5e3bc6452950b1050cf1cb6c2ae6b397637227f8a9b37be420edc6289598219c9119e75b796eb3a5d1fed452c2a9c',
+'2000-02-12', 'Female', 'SC', 'tadepalligudem', 'vasavi', 'ece', 4);
+
+INSERT INTO admins
+(admin_id, name, email, password, created_at)
+VALUES
+(
+    1,
+    'lalithya',
+    'vanacharlalalithya@gmail.com',
+    'scrypt:32768:8:1$tFChGzDVP6vSDl9Y$5c86b810ee00679004cb9eb63f0a42b09089a8e48f82d0843e1a582006cc38cbc68d04c0d8a06a96fbb3ee96f6166d65043e7de2a0c6037a6f854ae7bc285478',
+    '2026-10-10 01:08:42'
+);

@@ -207,170 +207,190 @@
         </div>
 
     </div>
+```html
+<!-- Recent Applications -->
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
 
-    <!-- Recent Applications -->
-    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
+    <div class="card-header border-0 p-3 p-md-4"
+         style="background: linear-gradient(135deg, #edf3ff, #fff0f7);">
 
-        <div class="card-header border-0 p-3 p-md-4"
-             style="background: linear-gradient(135deg, #edf3ff, #fff0f7);">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
 
-            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
+            <div>
+                <h4 class="fw-bold mb-1" style="color: #243b64;">
+                    <i class="bi bi-clock-history me-2" style="color: #0250c5;"></i>
+                    Recent Applications
+                </h4>
 
-                <div>
-                    <h4 class="fw-bold mb-1" style="color: #243b64;">
-                        <i class="bi bi-clock-history me-2" style="color: #0250c5;"></i>
-                        Recent Applications
-                    </h4>
-
-                    <p class="text-secondary mb-0 small">
-                        Review and monitor student applications.
-                    </p>
-                </div>
-
-                <span class="badge rounded-pill px-3 py-2"
-                      style="background-color: #dbeafe; color: #1d4ed8;">
-                    <i class="bi bi-list-check me-1"></i>
-                    Latest Applications
-                </span>
-
+                <p class="text-secondary mb-0 small">
+                    Review and monitor student applications.
+                </p>
             </div>
-        </div>
 
-        <div class="table-responsive">
+            <span class="badge rounded-pill px-3 py-2"
+                  style="background-color: #dbeafe; color: #1d4ed8;">
+                <i class="bi bi-list-check me-1"></i>
+                Latest Applications
+            </span>
 
-            <table class="table table-hover align-middle mb-0">
-
-                <thead>
-                    <tr style="background-color: #edf3ff; color: #243b64;">
-                        <th class="px-3 py-3">Student</th>
-                        <th class="px-3 py-3">Scholarship</th>
-                        <th class="px-3 py-3">Status</th>
-                        <th class="px-3 py-3 text-center">Action</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    {% for application in recent_applications %}
-
-                    <tr>
-
-                        <td class="px-3 py-3">
-                            <div class="d-flex align-items-center gap-2">
-
-                                <div class="rounded-circle d-flex justify-content-center align-items-center text-white flex-shrink-0"
-                                     style="width: 40px; height: 40px; background: linear-gradient(135deg, #0250c5, #d43f8d);">
-                                    <i class="bi bi-person-fill"></i>
-                                </div>
-
-                                <span class="fw-semibold" style="color: #334155;">
-                                    {{ application.name }}
-                                </span>
-
-                            </div>
-                        </td>
-
-                        <td class="px-3 py-3">
-                            <span class="fw-medium" style="color: #334155;">
-                                {{ application.scholarship_name }}
-                            </span>
-                        </td>
-
-                        <td class="px-3 py-3">
-
-                            {% if application.status == 'Approved' %}
-
-                            <span class="badge rounded-pill px-3 py-2"
-                                  style="background-color: #d1fae5; color: #047857; border: 1px solid #a7f3d0;">
-                                <i class="bi bi-check-circle me-1"></i>
-                                Approved
-                            </span>
-
-                            {% elif application.status == 'Rejected' %}
-
-                            <span class="badge rounded-pill px-3 py-2"
-                                  style="background-color: #fee2e2; color: #b91c1c; border: 1px solid #fecaca;">
-                                <i class="bi bi-x-circle me-1"></i>
-                                Rejected
-                            </span>
-
-                            {% elif application.status == 'Allocated' %}
-
-                            <span class="badge rounded-pill px-3 py-2"
-                                  style="background-color: #dbeafe; color: #1d4ed8; border: 1px solid #bfdbfe;">
-                                <i class="bi bi-cash-coin me-1"></i>
-                                Allocated
-                            </span>
-
-                            {% else %}
-
-                            <span class="badge rounded-pill px-3 py-2"
-                                  style="background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a;">
-                                <i class="bi bi-clock me-1"></i>
-                                {{ application.status }}
-                            </span>
-
-                            {% endif %}
-
-                        </td>
-
-                        <td class="px-3 py-3 text-center">
-
-                            {% if application.status == 'Pending' %}
-
-                            <a href="{{ url_for('application_review', application_id=application.application_id) }}"
-                               class="btn btn-sm text-white rounded-pill px-3"
-                               style="background: linear-gradient(135deg, #0250c5, #8e44ad); border: none;">
-
-                                <i class="bi bi-eye me-1"></i>
-                                Review
-
-                            </a>
-
-                            {% else %}
-
-                            <button type="button"
-                                    class="btn btn-outline-secondary btn-sm rounded-pill px-3"
-                                    disabled>
-
-                                <i class="bi bi-check2 me-1"></i>
-                                Reviewed
-
-                            </button>
-
-                            {% endif %}
-
-                        </td>
-
-                    </tr>
-
-                    {% else %}
-
-                    <tr>
-                        <td colspan="4" class="text-center py-5">
-
-                            <div class="mb-3">
-                                <i class="bi bi-inbox"
-                                   style="font-size: 3rem; color: #8e44ad;"></i>
-                            </div>
-
-                            <h5 class="fw-bold mt-2" style="color: #243b64;">
-                                No Applications Found
-                            </h5>
-
-                            <p class="text-secondary mb-0">
-                                Student applications will appear here.
-                            </p>
-
-                        </td>
-                    </tr>
-
-                    {% endfor %}
-
-                </tbody>
-            </table>
         </div>
     </div>
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle mb-0">
+
+            <thead>
+                <tr style="background-color: #edf3ff; color: #243b64;">
+                    <th class="px-3 py-3">Student</th>
+                    <th class="px-3 py-3">Scholarship</th>
+                    <th class="px-3 py-3">Available Funds</th>
+                    <th class="px-3 py-3">Allocated Amount</th>
+                    <th class="px-3 py-3">Status</th>
+                    <th class="px-3 py-3 text-center">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for application in recent_applications %}
+
+                <tr>
+
+                    <!-- Student -->
+                    <td class="px-3 py-3">
+                        <div class="d-flex align-items-center gap-2">
+
+                            <div class="rounded-circle d-flex justify-content-center align-items-center text-white flex-shrink-0"
+                                 style="width: 40px; height: 40px; background: linear-gradient(135deg, #0250c5, #d43f8d);">
+                                <i class="bi bi-person-fill"></i>
+                            </div>
+
+                            <span class="fw-semibold" style="color: #334155;">
+                                {{ application.name }}
+                            </span>
+
+                        </div>
+                    </td>
+
+                    <!-- Scholarship -->
+                    <td class="px-3 py-3">
+                        <span class="fw-medium" style="color: #334155;">
+                            {{ application.scholarship_name }}
+                        </span>
+                    </td>
+
+                    <!-- Available Funds -->
+                    <td class="px-3 py-3">
+                        <span class="fw-semibold text-success">
+                            ₹{{ "{:,.2f}".format(application.available_funds or 0) }}
+                        </span>
+                    </td>
+
+                    <!-- Allocated Amount -->
+                    <td class="px-3 py-3">
+                        <span class="fw-semibold" style="color: #d97706;">
+                            ₹{{ "{:,.2f}".format(application.allocated_amount or 0) }}
+                        </span>
+                    </td>
+
+                    <!-- Status -->
+                    <td class="px-3 py-3">
+
+                        {% if application.status == 'Approved' %}
+
+                        <span class="badge rounded-pill px-3 py-2"
+                              style="background-color: #d1fae5; color: #047857; border: 1px solid #a7f3d0;">
+                            <i class="bi bi-check-circle me-1"></i>
+                            Approved
+                        </span>
+
+                        {% elif application.status == 'Rejected' %}
+
+                        <span class="badge rounded-pill px-3 py-2"
+                              style="background-color: #fee2e2; color: #b91c1c; border: 1px solid #fecaca;">
+                            <i class="bi bi-x-circle me-1"></i>
+                            Rejected
+                        </span>
+
+                        {% elif application.status == 'Allocated' %}
+
+                        <span class="badge rounded-pill px-3 py-2"
+                              style="background-color: #dbeafe; color: #1d4ed8; border: 1px solid #bfdbfe;">
+                            <i class="bi bi-cash-coin me-1"></i>
+                            Allocated
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge rounded-pill px-3 py-2"
+                              style="background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a;">
+                            <i class="bi bi-clock me-1"></i>
+                            {{ application.status }}
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <!-- Action -->
+                    <td class="px-3 py-3 text-center">
+
+                        {% if application.status == 'Pending' %}
+
+                        <a href="{{ url_for('application_review', application_id=application.application_id) }}"
+                           class="btn btn-sm text-white rounded-pill px-3"
+                           style="background: linear-gradient(135deg, #0250c5, #8e44ad); border: none;">
+
+                            <i class="bi bi-eye me-1"></i>
+                            Review
+
+                        </a>
+
+                        {% else %}
+
+                        <button type="button"
+                                class="btn btn-outline-secondary btn-sm rounded-pill px-3"
+                                disabled>
+
+                            <i class="bi bi-check2 me-1"></i>
+                            Reviewed
+
+                        </button>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+                    <td colspan="6" class="text-center py-5">
+
+                        <div class="mb-3">
+                            <i class="bi bi-inbox"
+                               style="font-size: 3rem; color: #8e44ad;"></i>
+                        </div>
+
+                        <h5 class="fw-bold mt-2" style="color: #243b64;">
+                            No Applications Found
+                        </h5>
+
+                        <p class="text-secondary mb-0">
+                            Student applications will appear here.
+                        </p>
+
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
 
     <!-- Quick Actions Heading -->
     <div class="mb-3">

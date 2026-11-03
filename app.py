@@ -924,7 +924,6 @@ def admin_login():
 
 
 
-
 @app.route('/admin_dashboard')
 def admin_dashboard():
 
@@ -980,21 +979,27 @@ def admin_dashboard():
     """)
     total_funds_allocated = cursor.fetchone()['total']
 
-    # Recent applications
+        # Recent applications with fund details
     cursor.execute("""
         SELECT
             a.application_id,
             s.name,
             sc.scholarship_name,
+            sc.available_amount AS available_funds,
+            COALESCE(a.allocated_amount, 0) AS allocated_amount,
             a.status
+
         FROM applications a
+
         JOIN students s
             ON a.student_id = s.student_id
+
         JOIN scholarships sc
             ON a.scholarship_id = sc.scholarship_id
+
         ORDER BY a.application_date DESC
-        
     """)
+
     recent_applications = cursor.fetchall()
 
     cursor.close()
@@ -1010,9 +1015,7 @@ def admin_dashboard():
         approved_applications=approved_applications,
         total_funds_allocated=total_funds_allocated,
         recent_applications=recent_applications
-    )
-
-
+    ) 
 @app.route('/manage_scholarship', methods=['GET', 'POST'])
 def manage_scholarship():
 
