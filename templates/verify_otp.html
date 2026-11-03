@@ -50,13 +50,76 @@ One more step to secure your account. Enter the verification code sent to your r
 
     </form>
 
-    <p class="form-footer">
+    <!-- OTP Countdown Timer -->
+    <div class="text-center mt-3">
+        <p class="mb-1">OTP expires in</p>
+
+        <h5 id="otpTimer" class="text-primary fw-bold">
+            05:00
+        </h5>
+    </div>
+
+    <p class="form-footer mt-3">
         Didn't receive the OTP?
-        <a href="{{ url_for('forgot_password') }}">
-            Request another OTP
+
+        <a href="{{ url_for('forgot_password') }}"
+           id="resendOtp"
+           class="disabled"
+           style="pointer-events: none; opacity: 0.5;">
+            Resend OTP
         </a>
     </p>
 
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    let timeLeft = 5 * 60;
+
+    const timerElement = document.getElementById("otpTimer");
+    const resendLink = document.getElementById("resendOtp");
+
+    resendLink.addEventListener("click", function(event) {
+        if (timeLeft > 0) {
+            event.preventDefault();
+        }
+    });
+
+    function updateTimer() {
+
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+
+        timerElement.textContent =
+            String(minutes).padStart(2, "0") + ":" +
+            String(seconds).padStart(2, "0");
+
+        if (timeLeft <= 0) {
+
+            clearInterval(timer);
+
+            timerElement.textContent = "00:00";
+            timerElement.classList.remove("text-primary");
+            timerElement.classList.add("text-danger");
+
+            resendLink.classList.remove("disabled");
+            resendLink.style.pointerEvents = "auto";
+            resendLink.style.opacity = "1";
+
+            resendLink.textContent = "Resend OTP";
+
+            return;
+        }
+
+        timeLeft--;
+    }
+
+    updateTimer();
+
+    const timer = setInterval(updateTimer, 1000);
+
+});
+</script>
 
 {% endblock %}

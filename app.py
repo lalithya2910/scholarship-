@@ -10,7 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from database import get_db_connection
 from mail import generate_otp, send_email
 from datetime import datetime, timedelta,date
-
+import time
 app = Flask(__name__)
 app.secret_key = "scholarship_secret_key"
 
@@ -164,6 +164,8 @@ def register():
 
     return render_template("register.html")
 
+
+
 @app.route("/forgot_password", methods=["GET", "POST"])
 def forgot_password():
 
@@ -175,11 +177,9 @@ def forgot_password():
         cursor = None
 
         try:
-            # Connect to database
             connection = get_db_connection()
             cursor = connection.cursor(dictionary=True)
 
-            # Get student details using email
             cursor.execute(
                 "SELECT student_id, name, email FROM students WHERE email = %s",
                 (email,)
@@ -189,10 +189,10 @@ def forgot_password():
 
             if student:
 
-                # Generate OTP using your existing mail.py function
+                # Generate OTP
                 otp = generate_otp()
 
-                # Send OTP to the student's email
+                # Send OTP email
                 email_sent = send_email(
                     student["email"],
                     student["name"],
@@ -201,11 +201,14 @@ def forgot_password():
 
                 if email_sent:
 
-                    # Store email and OTP in Flask session
+                    # Store OTP details in session
                     session["reset_email"] = student["email"]
-                    session["reset_otp"] = otp
+                    session["reset_otp"] = str(otp)
 
-                    # Clear previous OTP verification status
+                    # Store OTP generation time
+                    session["reset_otp_time"] = time.time()
+
+                    # Clear previous verification status
                     session.pop("otp_verified", None)
 
                     flash(
@@ -245,8 +248,6 @@ def forgot_password():
                 connection.close()
 
     return render_template("forgot_password.html")
-
-
 
 @app.route("/reset_password", methods=["GET", "POST"])
 def reset_password():
@@ -320,6 +321,8 @@ def reset_password():
 
     return render_template("reset_password.html")
 
+
+
 @app.route("/verify_otp", methods=["GET", "POST"])
 def verify_otp():
 
@@ -332,14 +335,24 @@ def verify_otp():
         entered_otp = request.form.get("otp", "").strip()
         stored_otp = str(session.get("reset_otp", ""))
 
-        # Temporary debugging
-        print("Entered OTP:", repr(entered_otp))
-        print("Stored OTP:", repr(stored_otp))
+        otp_time = session.get("reset_otp_time")
 
+        # Check OTP expiry (5 minutes)
+        if not otp_time or time.time() - otp_time > 300:
+
+            session.pop("reset_otp", None)
+            session.pop("reset_otp_time", None)
+
+            flash("OTP expired. Please request a new OTP.", "error")
+            return redirect(url_for("forgot_password"))
+
+        # Verify OTP
         if entered_otp == stored_otp:
 
             session["otp_verified"] = True
+
             session.pop("reset_otp", None)
+            session.pop("reset_otp_time", None)
 
             flash(
                 "OTP verified successfully! Reset your password.",
@@ -352,8 +365,6 @@ def verify_otp():
             flash("Invalid OTP. Please try again.", "error")
 
     return render_template("verify_otp.html")
-
-# ---------------- STUDENT DASHBOARD ----------------
 
 @app.route('/dashboard')
 def dashboard():
@@ -1220,79 +1231,6 @@ def manage_scholarship():
         today=date.today()
     )
 
-@app.route(
-    '/change_scholarship_status/<int:scholarship_id>/<action>',
-    methods=['POST']
-)
-def change_scholarship_status(scholarship_id, action):
-
-    if 'admin_id' not in session:
-        flash('Please login as admin.', 'error')
-        return redirect(url_for('admin_login'))
-
-    if action not in ('close', 'reopen'):
-        flash('Invalid action.', 'error')
-        return redirect(url_for('manage_scholarship'))
-
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    try:
-        # Update expired scholarships first
-        update_expired_scholarships(cursor)
-
-        cursor.execute("""
-            SELECT deadline, status
-            FROM scholarships
-            WHERE scholarship_id = %s
-        """, (scholarship_id,))
-
-        scholarship = cursor.fetchone()
-
-        if not scholarship:
-            flash('Scholarship not found.', 'error')
-
-        elif scholarship['deadline'] < date.today():
-            conn.commit()
-            flash('Expired scholarship cannot be reopened or closed.', 'error')
-
-        elif action == 'close':
-            if scholarship['status'] != 'Active':
-                flash('Only active scholarships can be closed.', 'error')
-            else:
-                cursor.execute("""
-                    UPDATE scholarships
-                    SET status = 'Closed'
-                    WHERE scholarship_id = %s
-                """, (scholarship_id,))
-
-                conn.commit()
-                flash('Applications closed successfully.', 'success')
-
-        elif action == 'reopen':
-            if scholarship['status'] != 'Closed':
-                flash('Only closed scholarships can be reopened.', 'error')
-            else:
-                cursor.execute("""
-                    UPDATE scholarships
-                    SET status = 'Active'
-                    WHERE scholarship_id = %s
-                """, (scholarship_id,))
-
-                conn.commit()
-                flash('Applications reopened successfully.', 'success')
-
-    except Exception as e:
-        conn.rollback()
-        print("Scholarship status error:", e)
-        flash('Unable to update scholarship status.', 'error')
-
-    finally:
-        cursor.close()
-        conn.close()
-
-    return redirect(url_for('manage_scholarship'))
-
 
 def update_expired_scholarships(cursor):
     cursor.execute("""
@@ -1325,7 +1263,7 @@ def edit_scholarship(scholarship_id):
 
         if not scholarship:
             flash('Scholarship not found.', 'error')
-            return redirect(url_for('manage_scholarships'))
+            return redirect(url_for('manage_scholarship'))
 
         # Fetch all available document types
         cursor.execute("""
@@ -1500,7 +1438,7 @@ def edit_scholarship(scholarship_id):
         conn.rollback()
         print('Edit scholarship error:', e)
         flash('Unable to load scholarship details.', 'error')
-        return redirect(url_for('manage_scholarships'))
+        return redirect(url_for('manage_scholarship'))
 
     finally:
         cursor.close()
