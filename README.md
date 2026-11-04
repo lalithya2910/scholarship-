@@ -11,40 +11,82 @@ Administrators can manage scholarships, review student applications, verify subm
 
 The main objective is to improve transparency, reduce manual work, and make scholarship management more efficient.
 
+
 ## 2. Features
 
-### Student Module
+The **Scholarship Eligibility and Fund Allocation Platform** provides separate functionalities for students and administrators. It simplifies the scholarship application process, helps administrators manage applications, and supports transparent scholarship fund allocation.
 
-- Student registration and secure login.
-- View available scholarships.
-- Check scholarship eligibility requirements.
-- Apply for scholarships.
-- Submit academic and financial information.
-- Upload required supporting documents.
-- Track application status.
-- View application approval and fund allocation details.
-- Forgot password and OTP-based password reset.
+### 2.1 Student Module
 
-### Admin Module
+The Student Module allows students to register, explore available scholarships, submit applications, and track their application progress.
 
-- Secure admin login.
-- Admin dashboard with application statistics.
-- Add, edit, and delete scholarships.
-- View registered students.
-- Review scholarship applications.
-- Verify uploaded student documents.
-- Approve or reject applications.
-- Manually allocate scholarship funds.
-- Track available and allocated scholarship funds.
+1. **Student Registration and Secure Login:** Students can create an account by providing their required personal details. Registered students can securely log in using their email address and password to access their dashboard.
 
-### General Features
+2. **View Available Scholarships:** Students can view the scholarships published by the administrator. The platform displays important information such as scholarship name, eligibility conditions, scholarship amount, application deadline, and availability.
 
-- Role-based access for students and administrators.
-- MySQL database integration.
-- Secure password hashing.
-- Email-based OTP verification.
-- Document upload management.
-- Application status tracking.
+3. **Check Scholarship Eligibility Requirements:** Students can check the eligibility criteria before applying. These criteria may include minimum academic percentage, maximum family income, category requirements, and other scholarship-specific conditions.
+
+4. **Apply for Scholarships:** Students can select a suitable scholarship and submit their application through the platform. The system stores the submitted application details in the database for further administrative review.
+
+5. **Submit Academic Information:** Students can provide their academic details, such as qualification, institution name, course, year of study, and academic percentage or marks. These details help administrators evaluate the application.
+
+6. **Submit Financial Information:** Students can enter their family income and other required financial details. This information helps administrators understand the student's financial background while reviewing the application.
+
+7. **Upload Required Supporting Documents:** Students can upload the necessary documents, such as academic certificates, income certificates, and other supporting documents. These documents are stored and made available for administrator verification.
+
+8. **Track Application Status:** Students can monitor the progress of their submitted applications through their dashboard. They can check whether an application is pending, approved, rejected, or allocated.
+
+9. **View Approval and Fund Allocation Details:** Once the administrator approves an application and allocates funds, students can view the approval status and allocated scholarship amount through their account.
+
+10. **Forgot Password and OTP-Based Password Reset:** If students forget their password, they can request a password reset using their registered email address. The system sends a One-Time Password (OTP) for verification before allowing them to create a new password.
+
+### 2.2 Admin Module
+
+The Admin Module provides administrators with the facilities required to manage scholarships, monitor student applications, verify documents, and allocate scholarship funds.
+
+1. **Secure Admin Login:** Administrators can access the administration section using their authorized login credentials. This ensures that scholarship management activities are restricted to authorized users.
+
+2. **Admin Dashboard with Application Statistics:** The admin dashboard provides an overview of platform activities through statistical cards. It displays information such as the total number of students, scholarships, applications, pending reviews, eligible applications, approved applications, and allocated funds.
+
+3. **Add New Scholarships:** Administrators can create and publish new scholarship opportunities by entering details such as scholarship name, description, minimum academic percentage, maximum family income, category, available amount, maximum amount per student, and application deadline.
+
+4. **Edit Existing Scholarships:** Administrators can update the details of existing scholarships whenever changes are required. This helps maintain accurate scholarship information and eligibility conditions.
+
+5. **Delete Scholarships:** Administrators can remove scholarships that are no longer required or available. This helps keep the scholarship list updated.
+
+6. **View Registered Students:** Administrators can view the details of students registered on the platform. This helps them access student information whenever required for application verification.
+
+7. **Review Scholarship Applications:** Administrators can view the applications submitted by students and examine the academic and financial information provided in each application before making a decision.
+
+8. **Verify Uploaded Student Documents:** Administrators can access the documents uploaded by students and check whether the submitted certificates and supporting documents are valid and appropriate. Based on verification, documents can be marked as verified or rejected.
+
+9. **Approve or Reject Applications:** After reviewing the application details and supporting documents, administrators can make the final decision. Eligible applications can be approved, while applications that do not satisfy the requirements can be rejected.
+
+10. **Manually Allocate Scholarship Funds:** Administrators can manually enter and allocate scholarship amounts to approved applications. The allocation is performed based on the available scholarship funds and the maximum amount permitted per student.
+
+11. **Track Available and Allocated Scholarship Funds:** The platform maintains scholarship fund information. After a successful allocation, the allocated amount is recorded and the available scholarship balance is updated in the database. This helps administrators monitor the remaining funds.
+
+### 2.3 General Features
+
+General features support the overall security, data management, and proper functioning of the platform.
+
+1. **Role-Based Access Control:** The platform provides separate access for students and administrators. Students can access student-related functionalities, while administrators can manage scholarships and applications.
+
+2. **MySQL Database Integration:** MySQL is used to store and manage important application data, including student details, scholarship information, academic records, financial details, uploaded document paths, application statuses, and fund allocation records.
+
+3. **Secure Password Hashing:** User passwords are stored in hashed form instead of plain text using Werkzeug password hashing functions. This helps protect user login credentials.
+
+4. **Email-Based OTP Verification:** The platform uses email-based OTP verification for password reset. This adds an additional verification step before a user can change their password.
+
+5. **Document Upload Management:** Students can upload required supporting documents through the application process. The system manages uploaded files and stores their corresponding file paths for administrator access and verification.
+
+6. **Application Status Management:** The system maintains application statuses such as Pending, Approved, Rejected, and Allocated. These statuses help students and administrators understand the current stage of each application.
+
+7. **Scholarship Fund Management:** The platform maintains available scholarship amounts and records manual allocations. The available balance is reduced when funds are successfully allocated to approved applications.
+
+### Overall Outcome
+
+These features provide a centralized platform where students can apply for scholarships and track their applications, while administrators can manage scholarship opportunities, verify applications, make approval decisions, and allocate funds efficiently.
 
 ## 3. Technology Stack
 
