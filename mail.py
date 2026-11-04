@@ -1,6 +1,4 @@
 
-import smtplib
-import secrets
 import os
 import secrets
 import smtplib
