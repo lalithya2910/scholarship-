@@ -1,153 +1,280 @@
 
-<div align="center">
+# Scholarship Eligibility and Fund Allocation Platform
 
-# 🎓 Scholarship Eligibility and Fund Allocation Platform
+## 1. Project Overview
 
-### A Smart Platform for Scholarship Applications, Verification and Fund Management
+The **Scholarship Eligibility and Fund Allocation Platform** is a web-based application developed to simplify and manage the scholarship application and fund allocation process.
 
-<p>
-  <img src="https://img.shields.io/badge/Python-3.x-blue?logo=python" />
-  <img src="https://img.shields.io/badge/Flask-Web_Framework-black?logo=flask" />
-  <img src="https://img.shields.io/badge/MySQL-Database-blue?logo=mysql" />
-  <img src="https://img.shields.io/badge/HTML5-Frontend-orange?logo=html5" />
-  <img src="https://img.shields.io/badge/CSS3-Styling-blue?logo=css3" />
-</p>
+The system provides a centralized platform where students can register, explore available scholarships, submit applications, enter academic and financial details, and upload required documents.
 
-</div>
+Administrators can manage scholarships, review student applications, verify submitted documents, approve or reject applications, and allocate scholarship funds manually.
 
----
+The main objective is to improve transparency, reduce manual work, and make scholarship management more efficient.
 
-## 📌 Overview
+## 2. Features
 
-A web-based scholarship management platform that simplifies
-student applications, document verification, eligibility
-assessment and scholarship fund allocation.
+### Student Module
 
-## ✨ Features
+- Student registration and secure login.
+- View available scholarships.
+- Check scholarship eligibility requirements.
+- Apply for scholarships.
+- Submit academic and financial information.
+- Upload required supporting documents.
+- Track application status.
+- View application approval and fund allocation details.
+- Forgot password and OTP-based password reset.
 
-- Student registration and authentication
-- Email OTP verification
-- Scholarship discovery and applications
-- Academic and financial information management
-- Supporting document uploads
-- Application status tracking
-- Admin scholarship management
-- Document verification and application review
-- Scholarship fund allocation
+### Admin Module
 
-## 👨‍🎓 Student Module
+- Secure admin login.
+- Admin dashboard with application statistics.
+- Add, edit, and delete scholarships.
+- View registered students.
+- Review scholarship applications.
+- Verify uploaded student documents.
+- Approve or reject applications.
+- Manually allocate scholarship funds.
+- Track available and allocated scholarship funds.
 
-Detailed student functionality.
+### General Features
 
-## 🛡️ Admin Module
+- Role-based access for students and administrators.
+- MySQL database integration.
+- Secure password hashing.
+- Email-based OTP verification.
+- Document upload management.
+- Application status tracking.
 
-Detailed administrator functionality.
+## 3. Technology Stack
 
-## 🛠️ Tech Stack
-
-| Layer | Technology |
+| Category | Technologies |
 |---|---|
+| Frontend | HTML, CSS, Bootstrap 5, JavaScript |
 | Backend | Python, Flask |
-| Frontend | HTML, CSS |
 | Database | MySQL |
-| Authentication | Flask Sessions |
-| Email | Gmail SMTP |
-| Password Security | Werkzeug |
+| Database Connector | mysql-connector-python |
+| Authentication | Flask Sessions, Werkzeug Password Hashing |
+| Email Service | Python Email / SMTP |
+| Development Tools | Visual Studio Code, Git, GitHub |
 
-## 🏗️ Architecture
+## 4. Project Workflow
 
-Student / Admin
-       |
-       v
-Flask Web Application
-       |
-       v
-Business Logic
-       |
-       v
-MySQL Database
+1. Student Registration
+2. Student Login
+3. View Available Scholarships
+4. Submit Scholarship Application
+5. Enter Academic Details
+6. Enter Financial Details
+7. Upload Required Documents
+8. Admin Reviews Applications
+9. Admin Verifies Documents
+10. Admin Approves or Rejects Applications
+11. Admin Allocates Scholarship Funds
+12. Student Checks Application Status
 
-## 🔄 Application Workflow
+## 5. Project Setup and Installation
 
-1. Student registration
-2. Student login
-3. Scholarship discovery
-4. Application submission
-5. Document verification
-6. Admin review
-7. Approval or rejection
-8. Fund allocation
-9. Status tracking
+### Prerequisites
 
-## 🗄️ Database Design
+- Python 3.10 or above
+- MySQL Server
+- Git
+- Visual Studio Code (recommended)
 
-| Table | Purpose |
-|---|---|
-| students | Student information |
-| admins | Admin accounts |
-| scholarships | Scholarship information |
-| applications | Application records |
-| documents | Uploaded documents |
-| academic_details | Academic records |
-| financial_details | Financial records |
-| committee_reviews | Review records |
-| fund_allocations | Allocation records |
-
-## 🚀 Installation and Setup
+### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/lalithya2910/scholarship-.git
+git clone https://github.com/lalithya2910/scholarship-
+```
+
+### Step 2: Navigate to the Project Directory
+
+```bash
 cd scholarship-
+```
+
+### Step 3: Create a Virtual Environment
+
+```bash
 python -m venv venv
 ```
 
-Activate the environment and install dependencies:
+### Step 4: Activate the Virtual Environment
+
+For Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+### Step 5: Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Configure MySQL and the environment variables.
+### Step 6: Configure the Database
 
-Run:
+1. Start your MySQL Server.
+2. Create a database named `scholarship`.
+3. Import the provided SQL database file.
+4. Configure the database connection details in the `.env` file.
+
+### Step 7: Run the Application
 
 ```bash
 python app.py
 ```
 
-Open:
+Open your browser and visit:
 
+```text
 http://127.0.0.1:5000/
+```
 
-## ⚙️ Environment Variables
+## 6. Environment Variables
 
-Document your database, SMTP and Flask configuration.
+Create a `.env` file in the project root directory and configure the following variables:
 
-## 📁 Project Structure
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_NAME=scholarship
 
-Document the actual repository folders and files.
+SECRET_KEY=your_secret_key
 
-## 🔐 Security
+MAIL_USERNAME=your_email@gmail.com
+MAIL_PASSWORD=your_email_app_password
+```
 
-- Password hashing
-- OTP verification
-- Session-based authentication
-- File upload validation
-- Fund availability checks
+**Note:** Replace the example values with your actual configuration. Never upload your `.env` file or expose database credentials and email passwords on GitHub.
 
-## 👩‍💻 Developer
+## 7. API and Database Notes
 
-**Lalithya**
+### Database
 
-Individual Project | Sole Developer
+The application uses MySQL to store and manage student, scholarship, application, academic, financial, document, and fund allocation information.
 
-## 🔮 Future Enhancements
+Major database tables include:
 
-- Automated eligibility assessment
-- AI-based scholarship recommendations
-- Advanced reporting and analytics
+- `students` – Stores student registration details.
+- `admins` – Stores administrator login details.
+- `scholarships` – Stores scholarship information and funding limits.
+- `applications` – Stores student scholarship applications and their statuses.
+- `academic_details` – Stores academic information.
+- `financial_details` – Stores family income and financial information.
+- `documents` – Stores uploaded document references and verification status.
+- `scholarship_required_documents` – Stores required documents for scholarships.
+- `fund_allocations` – Stores scholarship fund allocation records.
+- `bank_details` – Stores student bank account-related information.
 
-## 📌 Repository
+### Application Processing
 
-https://github.com/lalithya2910/scholarship-
+- Flask routes handle student and admin requests.
+- MySQL queries perform database operations.
+- Student and scholarship information is stored in relational tables.
+- Application status is updated based on administrator decisions.
+- Fund allocation records are maintained in the database.
+- Available scholarship funds are updated after successful allocation.
 
+The application primarily uses Flask server-side routes and does not depend on a separate REST API service.
+
+## 8. Team Member Contributions
+
+### Individual Project Development
+
+**Team Member:** Lalithya Vanacharla  
+**Role:** Full Stack Developer
+
+This project was independently designed and developed by Lalithya Vanacharla. I was responsible for the complete development lifecycle, including requirement analysis, system design, frontend development, backend implementation, database integration, testing, debugging, and project documentation.
+
+### Key Responsibilities
+
+**1. Requirement Analysis and Planning**
+
+- Identified the challenges in traditional scholarship application and fund management processes.
+- Analyzed the requirements of students and administrators.
+- Planned the application workflow and identified the major system modules.
+- Designed the overall functionality to simplify scholarship application processing and fund allocation.
+
+**2. Frontend Development**
+
+- Designed and developed user interfaces using HTML, CSS, Bootstrap 5, and JavaScript.
+- Created responsive and user-friendly pages for student and administrator modules.
+- Developed registration, login, scholarship listing, application forms, and dashboard interfaces.
+- Implemented navigation and application status displays to improve the user experience.
+
+**3. Backend Development**
+
+- Developed the application backend using Python and the Flask framework.
+- Implemented student registration, authentication, and session management.
+- Developed scholarship application processing functionality.
+- Implemented academic and financial information submission.
+- Integrated document upload and application tracking functionality.
+- Developed administrator functionalities for managing scholarships and reviewing applications.
+
+**4. Database Design and Integration**
+
+- Designed and managed the MySQL relational database.
+- Created and integrated database tables for students, administrators, scholarships, applications, academic details, financial details, documents, and fund allocations.
+- Implemented database operations for inserting, retrieving, updating, and deleting records.
+- Integrated Flask with MySQL using `mysql-connector-python`.
+- Managed scholarship fund availability and allocation records.
+
+**5. Scholarship Management and Administration**
+
+- Implemented scholarship creation, modification, and deletion functionality.
+- Developed the application review process for administrators.
+- Implemented document verification functionality.
+- Developed application approval and rejection features.
+- Implemented manual scholarship fund allocation with funding limit validation.
+- Integrated dashboard statistics to monitor students, scholarships, applications, and allocated funds.
+
+**6. Security and Authentication**
+
+- Implemented role-based access for students and administrators.
+- Used password hashing for secure password storage.
+- Implemented email-based OTP verification for password reset.
+- Used Flask sessions to manage authenticated users.
+- Configured environment variables to protect sensitive application credentials.
+
+**7. Testing and Debugging**
+
+- Tested student registration, login, and scholarship application workflows.
+- Verified database connectivity and data consistency.
+- Tested document upload and verification functionality.
+- Checked application approval, rejection, and fund allocation processes.
+- Identified and resolved errors during development.
+- Validated application functionality through different user scenarios.
+
+**8. Documentation and Version Control**
+
+- Prepared project documentation and technical descriptions.
+- Maintained source code using Git and GitHub.
+- Organized project files and dependencies.
+- Created README documentation with setup instructions and configuration details.
+- Managed the project repository for submission and future maintenance.
+
+### Development Outcome
+
+Successfully developed a web-based Scholarship Eligibility and Fund Allocation Platform that provides a centralized system for managing scholarship applications, verifying student documents, reviewing applications, and allocating scholarship funds. The project demonstrates practical implementation of full-stack web development, database management, authentication, and application workflow automation.
+
+## 9. Future Scope
+
+- Automated scholarship eligibility verification.
+- Applicant priority scoring and ranking.
+- Online scholarship payment integration.
+- Advanced analytics and report generation.
+- SMS notifications for application updates.
+- Mobile application support.
+
+## 10. Conclusion
+
+The Scholarship Eligibility and Fund Allocation Platform provides an organized and transparent approach to managing scholarship applications. It reduces administrative workload, simplifies document verification, and helps administrators manage scholarship approvals and fund allocation efficiently.
+
+## 11. Repository
+
+GitHub: [Scholarship Eligibility and Fund Allocation Platform](https://github.com/lalithya2910/scholarship-)
