@@ -256,6 +256,103 @@ This project was independently developed by Lalithya Vanacharla, who handled the
 
 Successfully developed a web-based platform that simplifies scholarship applications, student document verification, application review, and scholarship fund allocation.
 
+# Application Code Documentation
+
+This section explains the Python modules, Flask functions, route functions, helper functions, and application execution used in the `app.py` file of the Scholarship Eligibility and Fund Allocation Platform.
+
+## 1. Python Imports and Their Uses
+
+The `app.py` file uses different Python modules and Flask functions to handle web pages, database operations, authentication, file uploads, email verification, and scholarship fund allocation.
+
+| Module / Import | Purpose |
+|---|---|
+| `Flask` | Creates the Flask web application. |
+| `render_template` | Displays HTML pages from the templates folder. |
+| `request` | Retrieves data submitted through HTML forms. |
+| `redirect` | Redirects users from one route to another. |
+| `url_for` | Generates URLs using Flask route function names. |
+| `flash` | Displays success, error, and warning messages. |
+| `session` | Stores user session information, such as student ID and admin ID. |
+| `send_file` | Sends uploaded documents to the browser for viewing or downloading. |
+| `abort` | Stops request processing and returns HTTP errors such as 403 or 404. |
+| `Path` | Handles file and folder paths. |
+| `uuid4` | Generates unique identifiers for uploaded document filenames. |
+| `secure_filename` | Sanitizes uploaded filenames for safer file handling. |
+| `generate_password_hash` | Converts plain-text passwords into secure hashes before storing them. |
+| `check_password_hash` | Verifies submitted passwords against stored password hashes. |
+| `get_db_connection` | Establishes a connection between the Flask application and MySQL database. |
+| `generate_otp` | Generates a One-Time Password for password reset verification. |
+| `send_email` | Sends the generated OTP to the student's registered email address. |
+| `datetime` | Provides date and time-related functionality. |
+| `timedelta` | Represents a duration or difference between dates and times. |
+| `date` | Handles dates, such as checking scholarship deadlines. |
+| `time` | Records OTP generation time and checks OTP expiration. |
+
+**Note:** `datetime` and `timedelta` are imported but are not currently used in the provided code.
+
+## 2. Functions in app.py and Their Uses
+
+The `app.py` file contains student module functions, admin module functions, and general helper functions. Each function performs a specific operation in the scholarship platform.
+
+### 2.1 Student Module Functions
+
+| Function | Route | Description |
+|---|---|---|
+| `index()` | `/` | Redirects users to the login page when they open the application. |
+| `login()` | `/login` | Authenticates students using their email and password and creates a student session. |
+| `register()` | `/register` | Registers new students, validates details, checks duplicate emails, hashes passwords, and saves student information in MySQL. |
+| `forgot_password()` | `/forgot_password` | Checks the registered email, generates an OTP, sends it through email, and stores OTP details in the session. |
+| `verify_otp()` | `/verify_otp` | Verifies the entered OTP and checks its five-minute validity period. |
+| `reset_password()` | `/reset_password` | Allows students to set a new password after successful OTP verification and updates the hashed password in the database. |
+| `dashboard()` | `/dashboard` | Displays student dashboard statistics, including total, pending, approved, allocated, and rejected applications, along with recent applications. |
+| `scholarships()` | `/scholarships` | Retrieves and displays active scholarships from the database. |
+| `scholarship_details()` | `/scholarship_details/<scholarship_id>` | Displays complete information about a selected scholarship. |
+| `application_status()` | `/application_status` | Displays submitted applications, scholarship names, application statuses, and allocated amounts when applicable. |
+| `apply_scholarship()` | `/apply_scholarship/<scholarship_id>` | Handles scholarship applications, validates academic and financial details, checks duplicate applications, uploads required documents, and saves application information in MySQL. |
+
+### 2.2 Admin Module Functions
+
+| Function | Route | Description |
+|---|---|---|
+| `admin_login()` | `/admin_login` | Authenticates administrators and creates an admin session. |
+| `admin_dashboard()` | `/admin_dashboard` | Displays statistics such as total students, scholarships, applications, pending reviews, eligible applications, approved applications, and allocated funds. |
+| `manage_scholarship()` | `/manage_scholarship` | Allows administrators to add scholarships, select required documents, and view existing scholarships. |
+| `edit_scholarship()` | `/edit_scholarship/<scholarship_id>` | Allows administrators to modify scholarship details, eligibility requirements, funds, deadlines, status, and required documents. |
+| `delete_scholarship()` | `/delete_scholarship/<scholarship_id>` | Deletes a scholarship and its required document records if no applications are associated with it. |
+| `application_review()` | `/application_review/<application_id>` | Displays student application details, verifies documents, records admin review decisions, and approves or rejects applications. |
+| `view_document()` | `/view_document/<document_id>` | Allows administrators to view uploaded student documents and updates the document status from Pending to Verified when the required conditions are met. |
+| `fund_allocation()` | `/fund_allocation` | Displays approved applications awaiting allocation, validates allocation amounts, records fund allocations, updates application status, and reduces available scholarship funds. |
+
+### 2.3 General and Helper Functions
+
+| Function | Description |
+|---|---|
+| `update_expired_scholarships(cursor)` | Checks scholarship deadlines and automatically changes the status of expired scholarships to `Expired`. |
+| `logout()` | Clears the current session and redirects the user to the login page. |
+
+## 3. Application Execution
+
+The following statements initialize and run the Flask application.
+
+| Code | Purpose |
+|---|---|
+| `app = Flask(__name__)` | Creates the Flask application instance. |
+| `app.secret_key = "scholarship_secret_key"` | Configures the secret key used to sign session cookies. |
+| `UPLOAD_FOLDER.mkdir(parents=True, exist_ok=True)` | Creates the document upload folder if it does not already exist. |
+| `if __name__ == '__main__':` | Checks whether the Python file is being executed directly. |
+| `app.run(debug=True)` | Starts the Flask development server with debug mode enabled. |
+
+**Note:** The secret key should be stored in an environment variable, and debug mode should be disabled in production.
+
+## 4. Summary
+
+The `app.py` file acts as the main controller of the Scholarship Eligibility and Fund Allocation Platform. It connects the frontend pages with backend functionality and the MySQL database.
+
+It manages student registration, authentication, scholarship applications, document uploads, admin review, scholarship management, and manual fund allocation. The application also provides email-based OTP verification for password recovery.
+
+Together, these functions provide an integrated platform for managing the scholarship application and fund allocation process.
+
+
 ## 9. Future Scope
 
 - Automated scholarship eligibility verification.
