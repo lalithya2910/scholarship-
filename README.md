@@ -58,20 +58,60 @@ The main objective is to improve transparency, reduce manual work, and make scho
 | Email Service | Python Email / SMTP |
 | Development Tools | Visual Studio Code, Git, GitHub |
 
+
 ## 4. Project Workflow
 
-1. Student Registration
-2. Student Login
-3. View Available Scholarships
-4. Submit Scholarship Application
-5. Enter Academic Details
-6. Enter Financial Details
-7. Upload Required Documents
-8. Admin Reviews Applications
-9. Admin Verifies Documents
-10. Admin Approves or Rejects Applications
-11. Admin Allocates Scholarship Funds
-12. Student Checks Application Status
+The Scholarship Eligibility and Fund Allocation Platform follows two major workflows: Student Scholarship Application and Admin Scholarship Management.
+
+### Workflow Diagram
+
+```mermaid
+flowchart TD
+    A([Start]) --> B[Student Registration]
+    B --> C[Student Login]
+    C --> D[View Available Scholarships]
+    D --> E[Apply for Scholarship]
+    E --> F[Submit Academic Details]
+    F --> G[Submit Financial Details]
+    G --> H[Upload Required Documents]
+
+    I([Admin Login]) --> J[Manage Scholarships]
+    J --> K[Add / Edit / Delete Scholarships]
+    K --> L[Review Applications]
+    H --> L
+
+    L --> M[Verify Uploaded Documents]
+    M --> N{Admin Decision}
+    N -->|Approved| O[Manual Fund Allocation]
+    N -->|Rejected| P[Application Rejected]
+    O --> Q[Update Available Funds]
+    P --> R[Student Checks Application Status]
+    Q --> R
+    R --> S([End])
+```
+
+### Workflow Description
+
+**Student Workflow:**
+1. Student registers and logs into the platform.
+2. Views available scholarships and eligibility requirements.
+3. Selects and applies for a suitable scholarship.
+4. Submits academic and financial details.
+5. Uploads the required supporting documents.
+
+**Admin Workflow:**
+1. Administrator logs into the admin panel.
+2. Adds new scholarships, edits existing scholarship details, or deletes scholarships.
+3. Reviews submitted student applications.
+4. Verifies uploaded supporting documents.
+5. Approves or rejects applications.
+6. Manually allocates scholarship funds to approved applications.
+7. Updates the available scholarship funds after successful allocation.
+
+**Final Step:**
+
+Students can log in to check their application status and view their allocated scholarship amount, if applicable.
+
 
 ## 5. Project Setup and Installation
 
