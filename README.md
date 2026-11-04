@@ -231,6 +231,7 @@ Major database tables include:
 
 The application primarily uses Flask server-side routes and does not depend on a separate REST API service.
 
+
 ## 8. Team Member Contributions
 
 ### Individual Project Development
@@ -238,78 +239,22 @@ The application primarily uses Flask server-side routes and does not depend on a
 **Team Member:** Lalithya Vanacharla  
 **Role:** Full Stack Developer
 
-This project was independently designed and developed by Lalithya Vanacharla. I was responsible for the complete development lifecycle, including requirement analysis, system design, frontend development, backend implementation, database integration, testing, debugging, and project documentation.
+This project was independently developed by Lalithya Vanacharla, who handled the complete development process, from requirement analysis to implementation and testing.
 
 ### Key Responsibilities
 
-**1. Requirement Analysis and Planning**
-
-- Identified the challenges in traditional scholarship application and fund management processes.
-- Analyzed the requirements of students and administrators.
-- Planned the application workflow and identified the major system modules.
-- Designed the overall functionality to simplify scholarship application processing and fund allocation.
-
-**2. Frontend Development**
-
-- Designed and developed user interfaces using HTML, CSS, Bootstrap 5, and JavaScript.
-- Created responsive and user-friendly pages for student and administrator modules.
-- Developed registration, login, scholarship listing, application forms, and dashboard interfaces.
-- Implemented navigation and application status displays to improve the user experience.
-
-**3. Backend Development**
-
-- Developed the application backend using Python and the Flask framework.
-- Implemented student registration, authentication, and session management.
-- Developed scholarship application processing functionality.
-- Implemented academic and financial information submission.
-- Integrated document upload and application tracking functionality.
-- Developed administrator functionalities for managing scholarships and reviewing applications.
-
-**4. Database Design and Integration**
-
-- Designed and managed the MySQL relational database.
-- Created and integrated database tables for students, administrators, scholarships, applications, academic details, financial details, documents, and fund allocations.
-- Implemented database operations for inserting, retrieving, updating, and deleting records.
-- Integrated Flask with MySQL using `mysql-connector-python`.
-- Managed scholarship fund availability and allocation records.
-
-**5. Scholarship Management and Administration**
-
-- Implemented scholarship creation, modification, and deletion functionality.
-- Developed the application review process for administrators.
-- Implemented document verification functionality.
-- Developed application approval and rejection features.
-- Implemented manual scholarship fund allocation with funding limit validation.
-- Integrated dashboard statistics to monitor students, scholarships, applications, and allocated funds.
-
-**6. Security and Authentication**
-
-- Implemented role-based access for students and administrators.
-- Used password hashing for secure password storage.
-- Implemented email-based OTP verification for password reset.
-- Used Flask sessions to manage authenticated users.
-- Configured environment variables to protect sensitive application credentials.
-
-**7. Testing and Debugging**
-
-- Tested student registration, login, and scholarship application workflows.
-- Verified database connectivity and data consistency.
-- Tested document upload and verification functionality.
-- Checked application approval, rejection, and fund allocation processes.
-- Identified and resolved errors during development.
-- Validated application functionality through different user scenarios.
-
-**8. Documentation and Version Control**
-
-- Prepared project documentation and technical descriptions.
-- Maintained source code using Git and GitHub.
-- Organized project files and dependencies.
-- Created README documentation with setup instructions and configuration details.
-- Managed the project repository for submission and future maintenance.
+- **Requirement Analysis:** Identified project requirements and planned the student and admin workflows.
+- **Frontend Development:** Designed responsive user interfaces using HTML, CSS, Bootstrap 5, and JavaScript.
+- **Backend Development:** Implemented application functionality using Python and Flask, including authentication, scholarship applications, and application management.
+- **Database Integration:** Designed and managed the MySQL database and integrated it with Flask using `mysql-connector-python`.
+- **Scholarship Management:** Developed features to add, edit, and delete scholarships, review applications, and verify documents.
+- **Fund Allocation:** Implemented manual scholarship fund allocation and available balance updates.
+- **Security:** Implemented password hashing, role-based access, session management, and email-based OTP verification.
+- **Testing and Documentation:** Tested application workflows, fixed errors, maintained the GitHub repository, and prepared project documentation.
 
 ### Development Outcome
 
-Successfully developed a web-based Scholarship Eligibility and Fund Allocation Platform that provides a centralized system for managing scholarship applications, verifying student documents, reviewing applications, and allocating scholarship funds. The project demonstrates practical implementation of full-stack web development, database management, authentication, and application workflow automation.
+Successfully developed a web-based platform that simplifies scholarship applications, student document verification, application review, and scholarship fund allocation.
 
 ## 9. Future Scope
 
