@@ -366,6 +366,4 @@ Together, these functions provide an integrated platform for managing the schola
 
 The Scholarship Eligibility and Fund Allocation Platform provides an organized and transparent approach to managing scholarship applications. It reduces administrative workload, simplifies document verification, and helps administrators manage scholarship approvals and fund allocation efficiently.
 
-## 11. Repository
 
-GitHub: [Scholarship Eligibility and Fund Allocation Platform](https://github.com/lalithya2910/scholarship-)
