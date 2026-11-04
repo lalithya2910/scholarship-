@@ -59,7 +59,7 @@ The platform simplifies the scholarship application process for students and hel
 
 | Category | Technologies |
 |---|---|
-| Frontend | HTML, CSS, Bootstrap 5, JavaScript |
+| Frontend | HTML, CSS, Bootstrap 5|
 | Backend | Python, Flask |
 | Database | MySQL |
 | Database Connector | mysql-connector-python |
