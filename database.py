@@ -1,7 +1,12 @@
 
 import os
 import mysql.connector
+from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
+
+# MySQL configuration
 DB_CONFIG = {
     "host": os.environ.get("DB_HOST", "localhost"),
     "port": int(os.environ.get("DB_PORT", "3306")),
@@ -10,10 +15,13 @@ DB_CONFIG = {
     "database": os.environ.get("DB_NAME", "scholarship"),
 }
 
+# Enable SSL for remote database connections
 if DB_CONFIG["host"] != "localhost":
     DB_CONFIG["ssl_disabled"] = False
 
+# Database connection function
 def get_db_connection():
     return mysql.connector.connect(**DB_CONFIG)
+
 
 

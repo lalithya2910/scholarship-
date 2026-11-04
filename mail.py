@@ -1,40 +1,32 @@
+
 import smtplib
-import random
+import secrets
+import os
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from dotenv import load_dotenv
 
+load_dotenv()
 
-# Gmail SMTP settings
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 
-
-# Your Gmail account
-SENDER_EMAIL = "vanacharlalalithya@gmail.com"
-
-# Gmail App Password
-SENDER_PASSWORD = "zqrj kddg snsl wuxv"
+SENDER_EMAIL = os.getenv("SMTP_EMAIL")
+SENDER_PASSWORD = os.getenv("SMTP_PASSWORD")
 
 
-# =========================================================
-# GENERATE OTP
-# =========================================================
-
+# Generate six-digit OTP
 def generate_otp():
-
-    otp = str(random.randint(100000, 999999))
-
-    return otp
+    return str(secrets.randbelow(900000) + 100000)
 
 
-# =========================================================
-# SEND OTP EMAIL
-# =========================================================
-
+# Send OTP email
 def send_email(to_email, username, otp):
 
     try:
+        if not SENDER_EMAIL or not SENDER_PASSWORD:
+            raise ValueError("Email credentials are missing.")
 
         message = MIMEMultipart()
 
@@ -57,39 +49,16 @@ Regards,
 Scholarship Portal Team
 """
 
-        message.attach(
-            MIMEText(body, "plain")
-        )
+        message.attach(MIMEText(body, "plain"))
 
-        # Connect to Gmail SMTP
-        server = smtplib.SMTP(
-            SMTP_SERVER,
-            SMTP_PORT
-        )
-
-        server.starttls()
-
-        # Login to Gmail
-        server.login(
-            SENDER_EMAIL,
-            SENDER_PASSWORD
-        )
-
-        # Send email
-        server.sendmail(
-            SENDER_EMAIL,
-            to_email,
-            message.as_string()
-        )
-
-        server.quit()
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(SENDER_EMAIL, SENDER_PASSWORD)
+            server.send_message(message)
 
         print("OTP email sent successfully.")
-
         return True
 
     except Exception as e:
-
         print("Error sending OTP email:", e)
-
         return False
