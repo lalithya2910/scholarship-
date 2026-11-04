@@ -1,4 +1,3 @@
-
 import os
 import mysql.connector
 from dotenv import load_dotenv
@@ -22,6 +21,3 @@ if DB_CONFIG["host"] != "localhost":
 # Database connection function
 def get_db_connection():
     return mysql.connector.connect(**DB_CONFIG)
-
-
-

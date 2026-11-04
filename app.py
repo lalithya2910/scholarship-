@@ -1,26 +1,49 @@
+import os
+from pathlib import Path
+from uuid import uuid4
+from datetime import datetime, timedelta, date
+import time
+
 from flask import (
     Flask, render_template, request, redirect,
     url_for, flash, session, send_file, abort
 )
-from pathlib import Path
-from uuid import uuid4
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
+from dotenv import load_dotenv
+import cloudinary
+import cloudinary.uploader
+import cloudinary.utils
 
 from database import get_db_connection
 from mail import generate_otp, send_email
-from datetime import datetime, timedelta,date
-import time
-app = Flask(__name__)
-app.secret_key = "scholarship_secret_key"
 
-# Upload folder configuration
-UPLOAD_FOLDER = Path(app.root_path) / "scholarship_documents"
-UPLOAD_FOLDER.mkdir(parents=True, exist_ok=True)
+# Load environment variables
+BASE_DIR = Path(__file__).resolve().parent
+load_dotenv(BASE_DIR / ".env")
+
+app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY", "local_development_key")
+
+# Vercel detection
+IS_VERCEL = os.getenv("VERCEL") == "1"
+
+# Local upload folder
+UPLOAD_FOLDER = BASE_DIR / "scholarship_documents"
+
+if not IS_VERCEL:
+    UPLOAD_FOLDER.mkdir(parents=True, exist_ok=True)
 
 ALLOWED_EXTENSIONS = {"pdf", "jpg", "jpeg", "png"}
-MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
-  # Change this to a secure random key in production
+MAX_FILE_SIZE = 10 * 1024 * 1024
+
+# Cloudinary configuration
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+    secure=True
+)
 
 @app.route("/")
 def index():
@@ -587,7 +610,10 @@ def apply_scholarship(scholarship_id):
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
+
     saved_files = []
+    uploaded_cloudinary_files = []
+
     scholarship = None
     required_documents = []
 
@@ -713,6 +739,7 @@ def apply_scholarship(scholarship_id):
             uploaded_documents = []
 
             for i, document_type in enumerate(required_documents):
+
                 uploaded_file = request.files.get(
                     f'document_{i}'
                 )
@@ -810,19 +837,66 @@ def apply_scholarship(scholarship_id):
 
             application_id = cursor.lastrowid
 
-            # Save documents in the application folder
-            application_folder = UPLOAD_FOLDER / str(application_id)
-            application_folder.mkdir(
-                parents=True, exist_ok=True
-            )
-
+            # Upload documents
             for document_type, original_name, uploaded_file, extension in uploaded_documents:
 
-                stored_name = f"{uuid4().hex}.{extension}"
-                disk_path = application_folder / stored_name
+                unique_name = uuid4().hex
 
-                uploaded_file.save(str(disk_path))
-                saved_files.append(disk_path)
+                if IS_VERCEL:
+
+                    # Upload to Cloudinary on Vercel
+                    resource_type = (
+                        "raw" if extension == "pdf" else "image"
+                    )
+
+                    public_id = (
+                        f"scholarship_documents/"
+                        f"{application_id}/{unique_name}"
+                    )
+
+                    result = cloudinary.uploader.upload(
+                        uploaded_file.stream,
+                        public_id=public_id,
+                        resource_type=resource_type,
+                        type="authenticated",
+                        format=extension
+                    )
+
+                    # Store Cloudinary reference in existing file_path
+                    stored_path = (
+                        f"cloudinary:{result['public_id']}"
+                        f"|{extension}|{resource_type}"
+                    )
+
+                    uploaded_cloudinary_files.append((
+                        result['public_id'],
+                        resource_type
+                    ))
+
+                else:
+
+                    # Save locally on localhost
+                    application_folder = (
+                        UPLOAD_FOLDER / str(application_id)
+                    )
+
+                    application_folder.mkdir(
+                        parents=True,
+                        exist_ok=True
+                    )
+
+                    stored_name = f"{unique_name}.{extension}"
+                    disk_path = application_folder / stored_name
+
+                    uploaded_file.save(str(disk_path))
+
+                    saved_files.append(disk_path)
+
+                    relative_path = disk_path.relative_to(
+                        BASE_DIR
+                    ).as_posix()
+
+                    stored_path = f"local:{relative_path}"
 
                 # Save document information in database
                 cursor.execute("""
@@ -834,7 +908,7 @@ def apply_scholarship(scholarship_id):
                     application_id,
                     document_type,
                     original_name,
-                    str(disk_path.resolve())
+                    stored_path
                 ))
 
             conn.commit()
@@ -849,27 +923,57 @@ def apply_scholarship(scholarship_id):
             )
 
     except ValueError as error:
+
         conn.rollback()
 
+        # Delete local files if submission fails
         for path in saved_files:
             try:
                 path.unlink(missing_ok=True)
             except OSError:
                 app.logger.exception(
-                    'Could not remove uploaded file'
+                    'Could not remove uploaded local file'
+                )
+
+        # Delete Cloudinary files if submission fails
+        for public_id, resource_type in uploaded_cloudinary_files:
+            try:
+                cloudinary.uploader.destroy(
+                    public_id,
+                    resource_type=resource_type,
+                    type="authenticated"
+                )
+            except Exception:
+                app.logger.exception(
+                    'Could not remove Cloudinary file'
                 )
 
         flash(str(error), 'danger')
 
     except Exception:
+
         conn.rollback()
 
+        # Delete local files if submission fails
         for path in saved_files:
             try:
                 path.unlink(missing_ok=True)
             except OSError:
                 app.logger.exception(
-                    'Could not remove uploaded file'
+                    'Could not remove uploaded local file'
+                )
+
+        # Delete Cloudinary files if submission fails
+        for public_id, resource_type in uploaded_cloudinary_files:
+            try:
+                cloudinary.uploader.destroy(
+                    public_id,
+                    resource_type=resource_type,
+                    type="authenticated"
+                )
+            except Exception:
+                app.logger.exception(
+                    'Could not remove Cloudinary file'
                 )
 
         app.logger.exception(
@@ -1740,23 +1844,20 @@ def application_review(application_id):
         conn.close()
 
 
-@app.route('/view_document/<int:document_id>')
+@app.route("/view_document/<int:document_id>")
 def view_document(document_id):
 
-    # 1. Admin login check
+    # Admin-only access
     if 'admin_id' not in session:
-        flash('Please login as admin first.', 'error')
-        return redirect(url_for('admin_login'))
+        flash("Please login as admin.", "error")
+        return redirect(url_for("admin_login"))
 
     conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True, buffered=True)
+    cursor = conn.cursor(dictionary=True)
 
     try:
-        # 2. Fetch document details and status
         cursor.execute("""
-            SELECT document_id, application_id,
-                   file_path, document_name,
-                   verification_status
+            SELECT document_id, application_id, document_name, file_path
             FROM documents
             WHERE document_id = %s
         """, (document_id,))
@@ -1766,65 +1867,49 @@ def view_document(document_id):
         if not document:
             abort(404)
 
-        # 3. Get actual file path
-        file_path = Path(document['file_path']).resolve()
+        file_path = document["file_path"]
 
-        upload_folder = (
-            Path(app.root_path) / 'scholarship_documents'
-        ).resolve()
+        # Cloudinary document
+        if file_path.startswith("cloudinary:"):
 
-        # 4. Restrict access to uploaded document folder
-        if not file_path.is_relative_to(upload_folder):
+            stored_value = file_path.replace(
+                "cloudinary:", "", 1
+            )
+
+            public_id, extension, resource_type = stored_value.split("|", 2)
+
+            url = cloudinary.utils.private_download_url(
+                public_id,
+                extension,
+                resource_type=resource_type,
+                type="authenticated",
+                expires_at=int(time.time()) + 300
+            )
+
+            return redirect(url)
+
+        # Local document
+        if file_path.startswith("local:"):
+            relative_path = file_path.replace("local:", "", 1)
+            full_path = (BASE_DIR / relative_path).resolve()
+
+        else:
+            # Older local records
+            full_path = Path(file_path).resolve()
+
+        try:
+            full_path.relative_to(UPLOAD_FOLDER.resolve())
+        except ValueError:
             abort(403)
 
-        # 5. Check file existence
-        if not file_path.is_file():
+        if not full_path.is_file():
             abort(404)
 
-        # 6. Automatically update Pending to Verified
-        # Do not overwrite an existing Rejected status
-        if document['verification_status'] == 'Pending':
-
-            # Verify the related application is still Pending
-            cursor.execute("""
-                SELECT status
-                FROM applications
-                WHERE application_id = %s
-            """, (document['application_id'],))
-
-            application_record = cursor.fetchone()
-
-            if (
-                application_record
-                and application_record['status'] == 'Pending'
-            ):
-                cursor.execute("""
-                    UPDATE documents
-                    SET verification_status = 'Verified'
-                    WHERE document_id = %s
-                      AND verification_status = 'Pending'
-                """, (document_id,))
-
-                conn.commit()
-
-        # 7. Send document to admin
-        return send_file(
-            file_path,
-            as_attachment=False,
-            download_name=Path(
-                document['document_name']
-            ).name
-        )
-
-    except Exception as e:
-        conn.rollback()
-        print('View Document Error:', e)
-        raise
+        return send_file(full_path, as_attachment=False)
 
     finally:
         cursor.close()
         conn.close()
-
 @app.route('/delete_scholarship/<int:scholarship_id>', methods=['POST'])
 def delete_scholarship(scholarship_id):
 
