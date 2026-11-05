@@ -237,7 +237,6 @@ The application primarily uses Flask server-side routes and does not depend on a
 ### Individual Project Development
 
 **Team Member:** Lalithya Vanacharla  
-**Role:** Full Stack Developer
 
 This project was independently developed by Lalithya Vanacharla, who handled the complete development process, from requirement analysis to implementation and testing.
 
